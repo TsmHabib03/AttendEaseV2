@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#14532D">
+    <meta name="description" content="San Francisco High School in Quezon City - Attendance Monitoring and Public Information Portal.">
+    <title>San Francisco High School | Attendance Portal</title>
+
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- =========================
+         Navigation
+    ========================== -->
+    <header class="site-header">
+        <div class="container nav-container">
+            <a class="brand" href="#home" aria-label="San Francisco High School">
+                <img src="assets/image/logo.png" alt="San Francisco High School logo" onerror="this.onerror=null;this.src='assets/images/Logo.png';">
+                <span>San Francisco High School</span>
+            </a>
+
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="nav-menu" id="primary-nav">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#programs">Programs</a>
+                <a href="#attendance">Attendance</a>
+                <a href="#contact">Contact</a>
+                <a class="nav-auth" href="admin/login.php?portal=faculty">Login</a>
+                <a class="nav-auth nav-register" href="admin/login.php?portal=register">Register</a>
+                <a class="nav-admin" href="admin/login.php">
+                    <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+                    Admin
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- =========================
+             Hero Section
+        ========================== -->
+        <section class="hero" id="home">
+            <img class="hero-bg" src="assets/image/hero-building.jpg" alt="San Francisco High School campus building" onerror="this.onerror=null;this.src='assets/images/HB Building.jpg';">
+            <div class="hero-overlay"></div>
+
+            <div class="container hero-content">
+                <p class="hero-label">
+                    <i class="fa-solid fa-school" aria-hidden="true"></i>
+                    Quezon City Public Secondary School
+                </p>
+                <h1>San Francisco High School</h1>
+                <p class="hero-subtitle">Attendance Monitoring &amp; Public Information Portal</p>
+                <p class="hero-description">
+                    Established on June 9, 1954, San Francisco High School is a public secondary school in Quezon City
+                    committed to academic excellence and digital innovation in school operations.
+                </p>
+
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="scan_attendance.php">
+                        <i class="fa-solid fa-id-card" aria-hidden="true"></i>
+                        Scan Attendance
+                    </a>
+                    <a class="btn btn-secondary" href="admin/login.php?portal=faculty">
+                        <i class="fa-solid fa-user" aria-hidden="true"></i>
+                        Student Login
+                    </a>
+                    <a class="btn btn-ghost" href="#about">
+                        <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================
+             About Section
+        ========================== -->
+        <section class="section about-section" id="about">
+            <div class="container about-grid">
+                <figure class="about-image">
+                    <img src="assets/image/about-building.jpg" alt="San Francisco High School building" onerror="this.onerror=null;this.src='assets/images/Admin Building.jpg';">
+                </figure>
+
+                <article class="about-content">
+                    <h2>About San Francisco High School</h2>
+                    <p>
+                        San Francisco High School is one of the largest public secondary schools in Quezon City and continues to
+                        provide accessible, quality education for junior and senior high school learners.
+                    </p>
+
+                    <ul class="about-facts">
+                        <li>
+                            <span>Established</span>
+                            <strong>June 9, 1954</strong>
+                        </li>
+                        <li>
+                            <span>Former Name</span>
+                            <strong>Don Mariano Marcos High School (1975-1986)</strong>
+                        </li>
+                        <li>
+                            <span>School Level</span>
+                            <strong>Public Secondary School (Grades 7-12)</strong>
+                        </li>
+                        <li>
+                            <span>Location</span>
+                            <strong>Misamis Street, Sto. Cristo, Quezon City</strong>
+                        </li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <!-- =========================
+             Attendance Features
+        ========================== -->
+        <section class="section attendance-section" id="attendance">
+            <div class="container">
+                <header class="section-header">
+                    <h2>Attendance System Features</h2>
+                    <p>Designed for accurate, efficient, and secure attendance monitoring for administrators and school personnel.</p>
+                </header>
+
+                <div class="feature-grid">
+                    <article class="feature-card">
+                        <i class="fa-solid fa-qrcode" aria-hidden="true"></i>
+                        <h3>QR Code Scanning</h3>
+                        <p>Fast and reliable QR attendance capture for daily student entry and class records.</p>
+                    </article>
+
+                    <article class="feature-card">
+                        <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
+                        <h3>Admin Dashboard Monitoring</h3>
+                        <p>Track attendance status, trends, and class-level summaries from one centralized interface.</p>
+                    </article>
+
+                    <article class="feature-card">
+                        <i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i>
+                        <h3>Real-Time Attendance Logs</h3>
+                        <p>Review live attendance logs with timestamped entries for better operational visibility.</p>
+                    </article>
+
+                    <article class="feature-card">
+                        <i class="fa-solid fa-database" aria-hidden="true"></i>
+                        <h3>Secure Student Records</h3>
+                        <p>Maintain organized and protected student attendance records for school reporting.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================
+             Programs Section
+        ========================== -->
+        <section class="section programs-section" id="programs">
+            <div class="container">
+                <header class="section-header">
+                    <h2>Academic Program Preview</h2>
+                    <p>SFHS offers foundational and specialized pathways for both junior and senior high school learners.</p>
+                </header>
+
+                <div class="program-grid">
+                    <article class="program-card">
+                        <i class="fa-solid fa-book-open-reader" aria-hidden="true"></i>
+                        <h3>Junior High School</h3>
+                        <p>Grades 7-10 curriculum focused on core competencies and learner development.</p>
+                        <a href="#contact">View Details</a>
+                    </article>
+
+                    <article class="program-card">
+                        <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
+                        <h3>Senior High School</h3>
+                        <p>Grades 11-12 programs preparing students for college, work, and life skills.</p>
+                        <a href="#contact">View Details</a>
+                    </article>
+
+                    <article class="program-card">
+                        <i class="fa-solid fa-flask-vial" aria-hidden="true"></i>
+                        <h3>Academic Strands</h3>
+                        <p>Includes STEM, ABM, and HUMSS tracks aligned with academic and career goals.</p>
+                        <a href="#contact">View Details</a>
+                    </article>
+
+                    <article class="program-card">
+                        <i class="fa-solid fa-laptop-code" aria-hidden="true"></i>
+                        <h3>TVL Track</h3>
+                        <p>Technical-Vocational-Livelihood programs including ICT and other specializations.</p>
+                        <a href="#contact">View Details</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================
+             Call To Action
+        ========================== -->
+        <section class="section cta-section">
+            <div class="container">
+                <div class="cta-box">
+                    <h2>Digital Attendance System for Efficient School Management</h2>
+                    <p>Use the online portal to access attendance tools and school information quickly and securely.</p>
+                    <div class="cta-actions">
+                        <a class="btn btn-secondary-strong" href="admin/login.php?portal=register">
+                            <i class="fa-solid fa-user-plus" aria-hidden="true"></i>
+                            Register Account
+                        </a>
+                        <a class="btn btn-admin" href="admin/login.php">
+                            <i class="fa-solid fa-user-shield" aria-hidden="true"></i>
+                            Admin Login
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================
+             Location Section
+        ========================== -->
+        <section class="section location-section" id="contact">
+            <div class="container location-grid">
+                <article class="location-details">
+                    <h2>Visit San Francisco High School</h2>
+                    <p class="address">
+                        Misamis Street, Barangay Sto. Cristo / Bago Bantay,<br>
+                        Quezon City, Metro Manila, Philippines
+                    </p>
+                    <p><strong>Contact Placeholder:</strong> +63 (2) 0000-0000</p>
+                    <p><strong>Email Placeholder:</strong> info@sfhsqc.edu.ph</p>
+                    <p><strong>Office Hours:</strong> Monday to Friday, 7:00 AM - 5:00 PM</p>
+                </article>
+
+                <div class="map-wrap">
+                    <iframe
+                        title="San Francisco High School map location"
+                        src="https://www.google.com/maps?q=San+Francisco+High+School+Misamis+Street+Quezon+City&output=embed"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- =========================
+         Footer
+    ========================== -->
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <section class="footer-brand">
+                <img src="assets/image/logo.png" alt="SFHS logo" onerror="this.onerror=null;this.src='assets/images/Logo.png';">
+                <h3>San Francisco High School</h3>
+                <p>Public Secondary School | Grades 7-12 | Quezon City</p>
+            </section>
+
+            <section class="footer-links">
+                <h4>Quick Links</h4>
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#programs">Programs</a>
+                <a href="#attendance">Attendance</a>
+                <a href="#contact">Contact</a>
+            </section>
+
+            <section class="footer-contact">
+                <h4>Contact Info</h4>
+                <p>Misamis Street, Sto. Cristo, Quezon City</p>
+                <p>+63 (2) 0000-0000</p>
+                <p>info@sfhsqc.edu.ph</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+                </div>
+            </section>
+        </div>
+
+        <div class="container footer-bottom">
+            <p>&copy; 2026 San Francisco High School. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.querySelector(".menu-toggle");
+        const navMenu = document.querySelector("#primary-nav");
+
+        if (menuToggle && navMenu) {
+            menuToggle.addEventListener("click", function () {
+                const isExpanded = this.getAttribute("aria-expanded") === "true";
+                this.setAttribute("aria-expanded", String(!isExpanded));
+                this.classList.toggle("is-active");
+                navMenu.classList.toggle("is-open");
+            });
+
+            navMenu.querySelectorAll("a").forEach(function (link) {
+                link.addEventListener("click", function () {
+                    if (window.innerWidth < 1024) {
+                        menuToggle.setAttribute("aria-expanded", "false");
+                        menuToggle.classList.remove("is-active");
+                        navMenu.classList.remove("is-open");
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
