@@ -1,3 +1,12 @@
+# SFHS San Francisco High School Attendance Checker
+
+This system was developed as part of a research project to modernize and streamline the attendance tracking process at SFHS San Francisco High School, providing an efficient and accurate solution for monitoring student attendance through QR code technology.
+**Project Name**: SFHS San Francisco High School Attendance Checker
+**Institution**: SFHS San Francisco High School
+**Repository**: SFHS-Attendance-Checker
+**📚 SFHS San Francisco High School - Attendance Management System**
+
+For questions, issues, or contributions related to this research project, please visit the GitHub repository or contact support.
 # Academy of St. Joseph Claveria, Cagayan Inc. Attendance Checker
 
 A comprehensive web-based attendance management system using QR code scanning technology and LRN (Learner Reference Number) identification. Built with modern web technologies including HTML5, CSS3, JavaScript, PHP 8+, and MySQL 8.

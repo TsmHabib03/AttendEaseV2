@@ -107,3 +107,5 @@
         revealItems.forEach((item) => observer.observe(item));
     }
 })();
+
+
