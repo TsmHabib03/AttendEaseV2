@@ -163,214 +163,198 @@ $recentAttendance = $dashboardData['recentActivity'];
 include 'includes/header_modern.php';
 ?>
 
-<!-- ASJ Modern Dashboard Theme -->
-<link rel="stylesheet" href="../css/asj-dashboard-modern.css">
-
-<!-- Chart.js CDN -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-
-<!-- Loading Overlay -->
-<div id="dashboardLoader" class="dashboard-loader">
-    <div class="loader-content">
-        <div class="spinner"></div>
-        <p>Loading Dashboard...</p>
-    </div>
-</div>
-
 <!-- Dashboard Data (JSON) -->
 <script>
     window.dashboardData = <?php echo json_encode($dashboardData); ?>;
 </script>
 
-<!-- Stats Cards -->
-<div class="stats-grid">
+<!-- Loading Overlay -->
+<div class="dash-loader" id="dashboardLoader">
+    <div class="dash-loader-content">
+        <div class="dash-loader-spinner"></div>
+        <p>Loading Dashboard...</p>
+    </div>
+</div>
+
+<!-- Dashboard Greeting -->
+<div class="dash-greeting">
+    <h2>Welcome back, <?php echo isset($currentAdmin) ? sanitizeOutput($currentAdmin['username']) : 'Admin'; ?></h2>
+    <p><i class="fas fa-calendar-day"></i> <?php echo date('l, F j, Y'); ?></p>
+</div>
+
+<!-- Stat Cards — Bento Grid -->
+<div class="bento" style="margin-bottom: var(--sp-6);">
     <!-- Total Students -->
-    <div class="stat-card stat-card-primary">
-        <div class="stat-card-header">
-            <div class="stat-card-icon">
-                <i class="fas fa-users"></i>
-            </div>
-            <span class="stat-card-label">Total Students</span>
+    <div class="dash-stat-card">
+        <div class="dash-stat-icon dash-stat-icon-green">
+            <i class="fas fa-users"></i>
         </div>
-        <div class="stat-card-value"><?php echo number_format($totalStudents); ?></div>
-        <div class="stat-card-footer">
-            <span><?php echo $activeSections; ?> sections</span>
+        <div class="dash-stat-value"><?php echo number_format($totalStudents); ?></div>
+        <div class="dash-stat-label">Total Students</div>
+        <div class="dash-stat-footer">
+            <i class="fas fa-layer-group"></i> <?php echo $activeSections; ?> sections
         </div>
     </div>
 
     <!-- Present Today -->
-    <div class="stat-card stat-card-success">
-        <div class="stat-card-header">
-            <div class="stat-card-icon">
-                <i class="fas fa-user-check"></i>
-            </div>
-            <span class="stat-card-label">Present Today</span>
+    <div class="dash-stat-card">
+        <div class="dash-stat-icon dash-stat-icon-green">
+            <i class="fas fa-user-check"></i>
         </div>
-        <div class="stat-card-value"><?php echo number_format($presentToday); ?></div>
-        <div class="stat-card-footer">
-            <span><i class="fas fa-arrow-up"></i> <?php echo $attendanceRate; ?>% rate</span>
+        <div class="dash-stat-value"><?php echo number_format($presentToday); ?></div>
+        <div class="dash-stat-label">Present Today</div>
+        <div class="dash-stat-footer">
+            <i class="fas fa-arrow-up"></i> <?php echo $attendanceRate; ?>% rate
         </div>
     </div>
 
     <!-- Absent Today -->
-    <div class="stat-card stat-card-error">
-        <div class="stat-card-header">
-            <div class="stat-card-icon">
-                <i class="fas fa-user-xmark"></i>
-            </div>
-            <span class="stat-card-label">Absent Today</span>
+    <div class="dash-stat-card">
+        <div class="dash-stat-icon dash-stat-icon-amber">
+            <i class="fas fa-user-xmark"></i>
         </div>
-        <div class="stat-card-value"><?php echo number_format($absentToday); ?></div>
-        <div class="stat-card-footer">
-            <span><?php echo number_format(100 - $attendanceRate, 1); ?>% of total</span>
+        <div class="dash-stat-value"><?php echo number_format($absentToday); ?></div>
+        <div class="dash-stat-label">Absent Today</div>
+        <div class="dash-stat-footer" style="color: #D97706;">
+            <i class="fas fa-arrow-down"></i> <?php echo number_format(100 - $attendanceRate, 1); ?>% of total
         </div>
     </div>
 
     <!-- Total Records -->
-    <div class="stat-card stat-card-info">
-        <div class="stat-card-header">
-            <div class="stat-card-icon">
-                <i class="fas fa-clipboard-list"></i>
-            </div>
-            <span class="stat-card-label">Total Records</span>
+    <div class="dash-stat-card">
+        <div class="dash-stat-icon dash-stat-icon-purple">
+            <i class="fas fa-clipboard-list"></i>
         </div>
-        <div class="stat-card-value"><?php echo number_format($totalRecords); ?></div>
-        <div class="stat-card-footer">
-            <span>All time attendance</span>
+        <div class="dash-stat-value"><?php echo number_format($totalRecords); ?></div>
+        <div class="dash-stat-label">Total Records</div>
+        <div class="dash-stat-footer" style="color: #7C3AED;">
+            <i class="fas fa-database"></i> All time
         </div>
     </div>
 </div>
 
-<!-- Dashboard Grid -->
-<div class="dashboard-grid">
-    <!-- Left Column -->
-    <div style="display: flex; flex-direction: column; gap: var(--space-6);">
-        <!-- Weekly Attendance Chart -->
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-chart-line"></i> Weekly Attendance Trend</h3>
-            </div>
-            <div class="card-body">
-                <div class="chart-container">
-                    <canvas id="weeklyChart"></canvas>
-                </div>
-            </div>
+<!-- Main Bento Grid -->
+<div class="bento">
+    <!-- Weekly Attendance Chart — spans 2 columns -->
+    <div class="dash-card bento-span-2">
+        <div class="dash-card-header">
+            <h3 class="dash-card-title"><i class="fas fa-chart-line"></i> Weekly Attendance Trend</h3>
         </div>
-
-        <!-- Recent Attendance -->
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-clock-rotate-left"></i> Recent Attendance</h3>
-                <a href="attendance_reports_sections.php" class="btn btn-sm btn-outline">View All</a>
-            </div>
-            <div class="card-body" style="padding: 0;">
-                <?php if (!empty($recentAttendance)): ?>
-                    <?php foreach ($recentAttendance as $record): ?>
-                        <div class="recent-item">
-                            <div class="recent-student-info">
-                                <div class="recent-avatar">
-                                    <?php echo strtoupper(substr($record['first_name'], 0, 1)); ?>
-                                </div>
-                                <div class="recent-details">
-                                    <h4><?php echo sanitizeOutput($record['first_name'] . ' ' . $record['last_name']); ?></h4>
-                                    <p><?php echo sanitizeOutput($record['section']); ?> • In: <?php echo date('g:i A', strtotime($record['time_in'])); ?><?php echo $record['time_out'] ? ' • Out: ' . date('g:i A', strtotime($record['time_out'])) : ''; ?></p>
-                                </div>
-                            </div>
-                            <span class="badge badge-<?php echo $record['status'] === 'incomplete' ? 'warning' : ($record['status'] === 'complete' ? 'success' : 'primary'); ?>">
-                                <?php echo $record['status'] === 'complete' ? 'Complete' : ($record['status'] === 'incomplete' ? 'Incomplete' : 'Present'); ?>
-                            </span>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <div style="padding: var(--space-8); text-align: center; color: var(--gray-500);">
-                        <i class="fas fa-inbox" style="font-size: var(--text-4xl); margin-bottom: var(--space-4);"></i>
-                        <p>No attendance records yet today</p>
-                    </div>
-                <?php endif; ?>
+        <div class="dash-card-body">
+            <div class="dash-chart-wrap">
+                <canvas id="weeklyChart"></canvas>
             </div>
         </div>
     </div>
 
-    <!-- Right Column -->
-    <div style="display: flex; flex-direction: column; gap: var(--space-6);">
-        <!-- Quick Actions -->
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-bolt"></i> Quick Actions</h3>
+    <!-- Quick Actions -->
+    <div class="dash-card">
+        <div class="dash-card-header">
+            <h3 class="dash-card-title"><i class="fas fa-bolt"></i> Quick Actions</h3>
+        </div>
+        <div class="dash-card-body">
+            <div class="dash-actions">
+                <a href="manage_students.php" class="dash-action">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Add Student</span>
+                </a>
+                <a href="manual_attendance.php" class="dash-action">
+                    <i class="fas fa-clipboard-check"></i>
+                    <span>Manual Entry</span>
+                </a>
+                <a href="../scan_attendance.php" class="dash-action" target="_blank">
+                    <i class="fas fa-qrcode"></i>
+                    <span>QR Scanner</span>
+                </a>
+                <a href="attendance_reports_sections.php" class="dash-action">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Reports</span>
+                </a>
             </div>
-            <div class="card-body">
-                <div class="quick-actions-grid">
-                    <a href="manage_students.php" class="quick-action-card">
-                        <i class="fas fa-user-plus"></i>
-                        <span>Add Student</span>
-                    </a>
-                    <a href="manual_attendance.php" class="quick-action-card">
-                        <i class="fas fa-clipboard-check"></i>
-                        <span>Manual Entry</span>
-                    </a>
-                    <a href="../scan_attendance.php" class="quick-action-card" target="_blank">
-                        <i class="fas fa-qrcode"></i>
-                        <span>QR Scanner</span>
-                    </a>
-                    <a href="attendance_reports_sections.php" class="quick-action-card">
-                        <i class="fas fa-chart-bar"></i>
-                        <span>Reports</span>
-                    </a>
+        </div>
+    </div>
+
+    <!-- Section Chart -->
+    <div class="dash-card">
+        <div class="dash-card-header">
+            <h3 class="dash-card-title"><i class="fas fa-chart-pie"></i> Attendance by Section</h3>
+        </div>
+        <div class="dash-card-body">
+            <div class="dash-chart-wrap" style="height: 260px;">
+                <canvas id="sectionChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Attendance — spans 2 columns -->
+    <div class="dash-card bento-span-2">
+        <div class="dash-card-header">
+            <h3 class="dash-card-title"><i class="fas fa-clock-rotate-left"></i> Recent Attendance</h3>
+            <a href="attendance_reports_sections.php" class="btn btn-sm btn-outline">View All</a>
+        </div>
+        <div class="dash-card-body-flush">
+            <?php if (!empty($recentAttendance)): ?>
+                <?php foreach ($recentAttendance as $record): ?>
+                    <div class="dash-activity-item">
+                        <div class="dash-activity-left">
+                            <div class="dash-activity-avatar">
+                                <?php echo strtoupper(substr($record['first_name'], 0, 1)); ?>
+                            </div>
+                            <div class="dash-activity-info">
+                                <div class="dash-activity-name"><?php echo sanitizeOutput($record['first_name'] . ' ' . $record['last_name']); ?></div>
+                                <div class="dash-activity-meta"><?php echo sanitizeOutput($record['section']); ?> &bull; In: <?php echo date('g:i A', strtotime($record['time_in'])); ?><?php echo $record['time_out'] ? ' &bull; Out: ' . date('g:i A', strtotime($record['time_out'])) : ''; ?></div>
+                            </div>
+                        </div>
+                        <span class="dash-badge dash-badge-<?php echo $record['status'] === 'incomplete' ? 'warning' : ($record['status'] === 'complete' ? 'success' : 'primary'); ?>">
+                            <?php echo $record['status'] === 'complete' ? 'Complete' : ($record['status'] === 'incomplete' ? 'Incomplete' : 'Present'); ?>
+                        </span>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="dash-empty">
+                    <i class="fas fa-inbox"></i>
+                    <p>No attendance records yet today</p>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <!-- Needs Attention -->
+    <div class="dash-card">
+        <div class="dash-card-header">
+            <h3 class="dash-card-title">
+                <i class="fas fa-exclamation-triangle" style="color: #D97706;"></i>
+                Needs Attention
+            </h3>
+            <a href="manual_attendance.php" class="btn btn-sm btn-outline">Fix Records</a>
+        </div>
+        <div class="dash-card-body-flush" style="max-height: 380px; overflow-y: auto;">
+            <div id="needsAttentionList">
+                <div class="dash-empty">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading...</p>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Section-wise Attendance -->
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-chart-pie"></i> Today's Attendance by Section</h3>
-            </div>
-            <div class="card-body">
-                <div class="chart-container" style="height: 280px;">
-                    <canvas id="sectionChart"></canvas>
-                </div>
-            </div>
+    <!-- System Information -->
+    <div class="dash-card">
+        <div class="dash-card-header">
+            <h3 class="dash-card-title"><i class="fas fa-info-circle"></i> System Information</h3>
         </div>
-
-        <!-- Needs Attention -->
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">
-                    <i class="fas fa-exclamation-triangle" style="color: var(--red-500);"></i> 
-                    Needs Attention
-                </h3>
-                <a href="manual_attendance.php" class="btn btn-sm btn-outline">Fix Records</a>
+        <div class="dash-card-body">
+            <div class="dash-sysinfo-row">
+                <span class="dash-sysinfo-label">Total Records</span>
+                <span class="dash-sysinfo-value"><?php echo number_format($totalRecords); ?></span>
             </div>
-            <div class="card-body" style="padding: 0; max-height: 400px; overflow-y: auto;">
-                <div id="needsAttentionList">
-                    <div class="empty-state">
-                        <i class="fas fa-spinner fa-spin"></i>
-                        <p>Loading...</p>
-                    </div>
-                </div>
+            <div class="dash-sysinfo-row">
+                <span class="dash-sysinfo-label">Active Sections</span>
+                <span class="dash-sysinfo-value"><?php echo $activeSections; ?></span>
             </div>
-        </div>
-
-        <!-- System Info -->
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-info-circle"></i> System Information</h3>
-            </div>
-            <div class="card-body">
-                <div style="display: flex; flex-direction: column; gap: var(--space-3);">
-                    <div style="display: flex; justify-content: space-between; padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg);">
-                        <span style="color: var(--gray-600); font-size: var(--text-sm);">Total Records</span>
-                        <strong style="color: var(--gray-900);"><?php echo number_format($totalRecords); ?></strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg);">
-                        <span style="color: var(--gray-600); font-size: var(--text-sm);">Active Sections</span>
-                        <strong style="color: var(--gray-900);"><?php echo $activeSections; ?></strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; padding: var(--space-3); background: var(--gray-50); border-radius: var(--radius-lg);">
-                        <span style="color: var(--gray-600); font-size: var(--text-sm);">Last Updated</span>
-                        <strong style="color: var(--gray-900);"><?php echo date('g:i A'); ?></strong>
-                    </div>
-                </div>
+            <div class="dash-sysinfo-row">
+                <span class="dash-sysinfo-label">Last Updated</span>
+                <span class="dash-sysinfo-value"><?php echo date('g:i A'); ?></span>
             </div>
         </div>
     </div>
@@ -661,7 +645,7 @@ include 'includes/header_modern.php';
      */
     function populateRecentActivity() {
         // Already populated by PHP, but we can add animations
-        const items = document.querySelectorAll('.recent-item');
+        const items = document.querySelectorAll('.dash-activity-item');
         items.forEach((item, index) => {
             item.style.opacity = '0';
             item.style.transform = 'translateX(-20px)';
@@ -684,7 +668,7 @@ include 'includes/header_modern.php';
         
         if (needsAttention.length === 0) {
             container.innerHTML = `
-                <div class="empty-state">
+                <div class="dash-empty">
                     <i class="fas fa-check-circle"></i>
                     <p>All attendance records are complete!</p>
                 </div>
@@ -701,17 +685,17 @@ include 'includes/header_modern.php';
             const timeIn = record.time_in ? new Date(`2000-01-01 ${record.time_in}`).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) : 'N/A';
             
             html += `
-                <div class="attention-item">
-                    <div class="attention-info">
-                        <div class="attention-icon">
+                <div class="dash-attention-item">
+                    <div class="dash-attention-left">
+                        <div class="dash-attention-icon">
                             <i class="fas fa-exclamation"></i>
                         </div>
-                        <div class="attention-details">
+                        <div class="dash-attention-info">
                             <h4>${escapeHtml(record.first_name)} ${escapeHtml(record.last_name)}</h4>
-                            <p>${escapeHtml(record.section)} • ${dateStr} • In: ${timeIn} • Missing Time Out</p>
+                            <p>${escapeHtml(record.section)} &bull; ${dateStr} &bull; In: ${timeIn} &bull; Missing Time Out</p>
                         </div>
                     </div>
-                    <span class="badge badge-error">${daysText}</span>
+                    <span class="dash-badge dash-badge-error">${daysText}</span>
                 </div>
             `;
         });
@@ -719,7 +703,7 @@ include 'includes/header_modern.php';
         container.innerHTML = html;
         
         // Animate items
-        const items = container.querySelectorAll('.attention-item');
+        const items = container.querySelectorAll('.dash-attention-item');
         items.forEach((item, index) => {
             item.style.opacity = '0';
             item.style.transform = 'translateX(20px)';

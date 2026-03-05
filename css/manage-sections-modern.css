@@ -278,8 +278,11 @@
 }
 
 .stat-card-animated {
-    background: var(--white);
-    border-radius: var(--radius-xl);
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.50);
+    border-radius: 20px;
     padding: var(--spacing-lg);
     box-shadow: var(--shadow-md);
     transition: var(--transition-base);
@@ -429,16 +432,19 @@
    CONTENT CARD - Enhanced
    ============================================ */
 .content-card-enhanced {
-    background: var(--white);
-    border-radius: var(--radius-xl);
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.50);
+    border-radius: 20px;
     box-shadow: var(--shadow-lg);
     overflow: hidden;
 }
 
 .card-header-enhanced {
     padding: var(--spacing-xl);
-    background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
-    border-bottom: 2px solid var(--gray-100);
+    background: rgba(255, 255, 255, 0.72);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.50);
 }
 
 .card-header-left {
@@ -566,8 +572,10 @@
     top: calc(100% + 0.5rem);
     right: 0;
     min-width: 220px;
-    background: var(--white);
-    border: 1px solid var(--gray-200);
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.50);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-xl);
     padding: var(--spacing-sm);
@@ -1181,7 +1189,10 @@
 }
 
 .modal-content-enhanced {
-    background: var(--white);
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.50);
     border-radius: var(--radius-2xl);
     box-shadow: var(--shadow-2xl);
     overflow: hidden;
@@ -1189,8 +1200,8 @@
 
 .modal-header-enhanced {
     padding: var(--spacing-xl);
-    background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
-    border-bottom: 2px solid var(--gray-100);
+    background: rgba(255, 255, 255, 0.82);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.50);
     display: flex;
     justify-content: space-between;
     align-items: center;

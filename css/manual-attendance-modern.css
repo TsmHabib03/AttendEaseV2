@@ -533,8 +533,11 @@
 
 /* ===== CONTENT CARDS ===== */
 .content-card {
-    background: white;
-    border-radius: var(--radius-2xl);
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.50);
+    border-radius: 20px;
     box-shadow: var(--shadow-md);
     overflow: hidden;
     transition: var(--transition-smooth);
@@ -548,12 +551,12 @@
 /* ===== CARD HEADER ===== */
 .card-header-modern {
     padding: var(--space-6);
-    border-bottom: 2px solid var(--gray-100);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.50);
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--space-4);
-    background: linear-gradient(to right, var(--gray-50), white);
+    background: rgba(255, 255, 255, 0.72);
 }
 
 .card-header-left {
@@ -935,8 +938,10 @@
     align-items: center;
     justify-content: space-between;
     padding: var(--space-4);
-    background: var(--gray-50);
-    border: 2px solid var(--gray-200);
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.40);
     border-radius: var(--radius-lg);
     cursor: pointer;
     transition: var(--transition-smooth);

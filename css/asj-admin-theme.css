@@ -174,8 +174,11 @@ body {
 .login-card {
     width: 100%;
     max-width: 450px;
-    background: var(--asj-white);
-    border-radius: var(--radius-xl);
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.50);
+    border-radius: 24px;
     box-shadow: var(--shadow-xl);
     padding: 3rem 2.5rem;
     position: relative;
@@ -713,12 +716,16 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 9999;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .success-content {
-    background: var(--asj-white);
-    border-radius: var(--radius-xl);
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.50);
+    border-radius: 24px;
     padding: 3rem 2rem;
     max-width: 400px;
     text-align: center;

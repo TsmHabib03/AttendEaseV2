@@ -2002,7 +2002,7 @@ function printQRCode() {
                     .qr-container { 
                         margin: 20px 0; 
                         padding: 30px; 
-                        border: 3px solid #667eea; 
+                        border: 3px solid #10B981; 
                         border-radius: 15px;
                         background: #f9fafb;
                     }
@@ -2013,7 +2013,7 @@ function printQRCode() {
                     }
                     .scan-text {
                         font-size: 14px;
-                        color: #764ba2;
+                        color: #059669;
                         font-weight: bold;
                         margin-top: 15px;
                         font-style: italic;
