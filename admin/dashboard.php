@@ -176,10 +176,26 @@ include 'includes/header_modern.php';
     </div>
 </div>
 
-<!-- Dashboard Greeting -->
-<div class="dash-greeting">
-    <h2>Welcome back, <?php echo isset($currentAdmin) ? sanitizeOutput($currentAdmin['username']) : 'Admin'; ?></h2>
-    <p><i class="fas fa-calendar-day"></i> <?php echo date('l, F j, Y'); ?></p>
+<!-- Page Header — Glassmorphism Bento -->
+<div class="page-header-glass">
+    <div class="page-header-inner">
+        <nav class="breadcrumb-glass" aria-label="Breadcrumb">
+            <span class="breadcrumb-item active" aria-current="page">
+                <i class="fas fa-home"></i> Dashboard
+            </span>
+        </nav>
+        <div class="page-header-content-glass">
+            <div class="page-header-title-row">
+                <div class="page-header-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="page-header-text">
+                    <h1>Welcome back, <?php echo isset($currentAdmin) ? sanitizeOutput($currentAdmin['username']) : 'Admin'; ?></h1>
+                    <p><i class="fas fa-calendar-day"></i> <?php echo date('l, F j, Y'); ?></p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Stat Cards — Bento Grid -->
@@ -215,7 +231,7 @@ include 'includes/header_modern.php';
         </div>
         <div class="dash-stat-value"><?php echo number_format($absentToday); ?></div>
         <div class="dash-stat-label">Absent Today</div>
-        <div class="dash-stat-footer" style="color: #D97706;">
+        <div class="dash-stat-footer" style="color: #B45309;">
             <i class="fas fa-arrow-down"></i> <?php echo number_format(100 - $attendanceRate, 1); ?>% of total
         </div>
     </div>
@@ -227,7 +243,7 @@ include 'includes/header_modern.php';
         </div>
         <div class="dash-stat-value"><?php echo number_format($totalRecords); ?></div>
         <div class="dash-stat-label">Total Records</div>
-        <div class="dash-stat-footer" style="color: #7C3AED;">
+        <div class="dash-stat-footer" style="color: #6D28D9;">
             <i class="fas fa-database"></i> All time
         </div>
     </div>
@@ -323,7 +339,7 @@ include 'includes/header_modern.php';
     <div class="dash-card">
         <div class="dash-card-header">
             <h3 class="dash-card-title">
-                <i class="fas fa-exclamation-triangle" style="color: #D97706;"></i>
+                <i class="fas fa-exclamation-triangle" style="color: #B45309;"></i>
                 Needs Attention
             </h3>
             <a href="manual_attendance.php" class="btn btn-sm btn-outline">Fix Records</a>
@@ -400,12 +416,12 @@ include 'includes/header_modern.php';
         const presentData = weeklyData.map(day => parseInt(day.present) || 0);
         const absentData = weeklyData.map(day => parseInt(day.absent) || 0);
         
-        // ASJ Color Palette
+        // Emerald Color Palette
         const asjColors = {
             green: {
-                primary: '#4CAF50',
-                light: 'rgba(76, 175, 80, 0.8)',
-                lighter: 'rgba(76, 175, 80, 0.5)'
+                primary: '#10B981',
+                light: 'rgba(16, 185, 129, 0.8)',
+                lighter: 'rgba(16, 185, 129, 0.5)'
             },
             red: {
                 primary: '#EF4444',
@@ -535,18 +551,18 @@ include 'includes/header_modern.php';
         const presentData = sectionData.map(s => parseInt(s.present) || 0);
         const totalData = sectionData.map(s => parseInt(s.total) || 0);
         
-        // ASJ Color Palette for sections - vibrant greens, golds, and complementary colors
+        // Emerald palette for sections
         const asjSectionColors = [
-            'rgba(76, 175, 80, 0.8)',    // ASJ Green Primary
-            'rgba(255, 193, 7, 0.8)',    // ASJ Gold
-            'rgba(102, 187, 106, 0.8)',  // ASJ Green Medium
-            'rgba(255, 179, 0, 0.8)',    // Gold Dark
-            'rgba(16, 185, 129, 0.8)',   // Success Green
-            'rgba(255, 224, 130, 0.8)',  // Light Gold
-            'rgba(46, 125, 50, 0.8)',    // ASJ Green Dark
-            'rgba(255, 213, 79, 0.8)',   // Amber
-            'rgba(129, 199, 132, 0.8)',  // Light Green
-            'rgba(255, 204, 128, 0.8)'   // Peach Gold
+            'rgba(16, 185, 129, 0.82)',   // Emerald 500
+            'rgba(37, 99, 235, 0.78)',    // Blue 600
+            'rgba(109, 40, 217, 0.78)',   // Violet 700
+            'rgba(180, 83, 9, 0.78)',     // Amber 700
+            'rgba(5, 150, 105, 0.82)',    // Emerald 600
+            'rgba(190, 18, 60, 0.78)',    // Rose 700
+            'rgba(4, 120, 87, 0.82)',     // Emerald 700
+            'rgba(29, 78, 216, 0.78)',    // Blue 700
+            'rgba(52, 211, 153, 0.78)',   // Emerald 400
+            'rgba(124, 58, 237, 0.78)'    // Violet 600
         ];
         
         const borderColors = asjSectionColors.map(c => c.replace('0.8', '1'));

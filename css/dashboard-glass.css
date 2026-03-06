@@ -1,0 +1,384 @@
+/* ============================================================================
+   DASHBOARD & SCANNER — GLASSMORPHISM ENHANCEMENTS
+   Vibrant icon palette · Glass surfaces · Modern micro-interactions
+   Load AFTER admin-bento.css
+   ============================================================================ */
+
+
+/* ══════════════════════════════════════════════════════════════════
+   1. VIBRANT ICON COLOR SYSTEM (AA+ Contrast)
+   ══════════════════════════════════════════════════════════════ */
+
+/* Emerald — students, present, attendance */
+.dash-stat-icon-green {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(5, 150, 105, 0.08));
+  color: #059669;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.10);
+}
+
+/* Blue — information, data, records */
+.dash-stat-icon-blue {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(37, 99, 235, 0.08));
+  color: #2563EB;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.10);
+}
+
+/* Amber — warnings, absent */
+.dash-stat-icon-amber {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(217, 119, 6, 0.08));
+  color: #B45309;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.10);
+}
+
+/* Violet — records, analytics */
+.dash-stat-icon-purple {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(124, 58, 237, 0.08));
+  color: #6D28D9;
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.10);
+}
+
+/* Rose — errors, critical */
+.dash-stat-icon-red {
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.12), rgba(225, 29, 72, 0.08));
+  color: #BE123C;
+  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.12);
+  border: 1px solid rgba(244, 63, 94, 0.10);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   2. STAT CARDS — GLASS ENHANCEMENT
+   ══════════════════════════════════════════════════════════════ */
+
+.dash-stat-card {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.78) 0%,
+      rgba(255, 255, 255, 0.58) 100%
+    );
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dash-stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 12px 36px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(16, 185, 129, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.dash-stat-card::after {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 70%);
+}
+
+.dash-stat-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: var(--r-xl);
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.dash-stat-card:hover .dash-stat-icon {
+  transform: scale(1.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.dash-stat-value {
+  font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.2rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--gray-800) 0%, var(--gray-700) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dash-stat-footer {
+  color: var(--green-600);
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.dash-stat-footer i {
+  transition: transform 0.2s ease;
+}
+
+.dash-stat-card:hover .dash-stat-footer i {
+  transform: translateY(-1px);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   3. DASHBOARD CARDS — GLASS REFINEMENT
+   ══════════════════════════════════════════════════════════════ */
+
+.dash-card {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.78) 0%,
+      rgba(255, 255, 255, 0.55) 100%
+    );
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  border: 1px solid rgba(255, 255, 255, 0.50);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dash-card:hover {
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.dash-card-header {
+  border-bottom: 1px solid rgba(16, 185, 129, 0.06);
+}
+
+.dash-card-title {
+  font-size: 0.92rem;
+  letter-spacing: -0.01em;
+}
+
+.dash-card-title i {
+  color: var(--green-500);
+  font-size: 0.88rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.dash-card:hover .dash-card-title i {
+  color: var(--green-600);
+  transform: scale(1.08);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   4. QUICK ACTIONS — VIBRANT GLASS TILES
+   ══════════════════════════════════════════════════════════════ */
+
+.dash-actions {
+  gap: var(--sp-3);
+}
+
+.dash-action {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.65) 0%,
+      rgba(236, 253, 245, 0.45) 100%
+    );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(16, 185, 129, 0.10);
+  border-radius: var(--r-xl);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.dash-action::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.dash-action:hover::before {
+  opacity: 1;
+}
+
+.dash-action i {
+  font-size: 1.25rem;
+  color: var(--green-500);
+  transition: all 0.3s ease;
+}
+
+.dash-action:hover {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(236, 253, 245, 0.85) 0%,
+      rgba(209, 250, 229, 0.65) 100%
+    );
+  color: var(--green-700);
+  transform: translateY(-3px);
+  box-shadow:
+    0 8px 24px rgba(16, 185, 129, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  border-color: rgba(16, 185, 129, 0.20);
+}
+
+.dash-action:hover i {
+  color: var(--green-600);
+  transform: scale(1.15);
+}
+
+.dash-action:active {
+  transform: translateY(-1px);
+}
+
+.dash-action:focus-visible {
+  outline: 2px solid var(--green-500);
+  outline-offset: 2px;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   5. ACTIVITY & ATTENTION ITEMS
+   ══════════════════════════════════════════════════════════════ */
+
+.dash-activity-item {
+  transition: background 0.2s ease;
+  border-bottom: 1px solid rgba(16, 185, 129, 0.04);
+}
+
+.dash-activity-item:hover {
+  background: rgba(16, 185, 129, 0.03);
+}
+
+.dash-activity-avatar {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.10), rgba(5, 150, 105, 0.06));
+  color: var(--green-600);
+  border: 1px solid rgba(16, 185, 129, 0.10);
+  transition: all 0.2s ease;
+}
+
+.dash-activity-item:hover .dash-activity-avatar {
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.12);
+}
+
+/* Attention icon */
+.dash-attention-icon {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(217, 119, 6, 0.06));
+  color: #B45309;
+  border: 1px solid rgba(245, 158, 11, 0.10);
+}
+
+/* Badges */
+.dash-badge {
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  font-size: 0.68rem;
+  font-weight: 650;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.dash-badge-success {
+  background: rgba(16, 185, 129, 0.10);
+  color: #059669;
+  border-color: rgba(16, 185, 129, 0.10);
+}
+
+.dash-badge-warning {
+  background: rgba(245, 158, 11, 0.10);
+  color: #B45309;
+  border-color: rgba(245, 158, 11, 0.10);
+}
+
+.dash-badge-error {
+  background: rgba(244, 63, 94, 0.10);
+  color: #BE123C;
+  border-color: rgba(244, 63, 94, 0.10);
+}
+
+.dash-badge-primary {
+  background: rgba(16, 185, 129, 0.10);
+  color: #059669;
+  border-color: rgba(16, 185, 129, 0.10);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   6. SYSTEM INFO
+   ══════════════════════════════════════════════════════════════ */
+
+.dash-sysinfo-row {
+  background: rgba(255, 255, 255, 0.48);
+  border: 1px solid rgba(16, 185, 129, 0.05);
+  transition: background 0.2s ease;
+}
+
+.dash-sysinfo-row:hover {
+  background: rgba(16, 185, 129, 0.04);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   7. EMPTY & LOADER STATES
+   ══════════════════════════════════════════════════════════════ */
+
+.dash-empty i {
+  color: var(--gray-300);
+  transition: color 0.2s ease;
+}
+
+.dash-loader {
+  background: rgba(255, 255, 255, 0.90);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   8. CHART.JS CANVAS WRAPPER
+   ══════════════════════════════════════════════════════════════ */
+
+.dash-chart-wrap {
+  border-radius: var(--r-lg);
+  padding: var(--sp-2);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   9. REDUCED MOTION
+   ══════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .dash-stat-card,
+  .dash-stat-icon,
+  .dash-card,
+  .dash-action,
+  .dash-activity-item,
+  .dash-badge,
+  .dash-action i,
+  .dash-stat-footer i,
+  .dash-card-title i {
+    transition-duration: 0.01ms !important;
+    animation: none !important;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   10. PRINT
+   ══════════════════════════════════════════════════════════════ */
+
+@media print {
+  .dash-stat-card,
+  .dash-card {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--white);
+    box-shadow: 0 0 1px var(--gray-300);
+  }
+  .dash-loader {
+    display: none !important;
+  }
+}

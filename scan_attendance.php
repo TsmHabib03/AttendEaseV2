@@ -19,6 +19,9 @@
 
     <!-- Admin Bento (scanner styles) -->
     <link rel="stylesheet" href="css/admin-bento.css">
+    
+    <!-- Scanner Glass Redesign -->
+    <link rel="stylesheet" href="css/scanner-glass.css">
 </head>
 <body class="bg-mesh">
     <!-- Decorative Orbs -->

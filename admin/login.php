@@ -151,242 +151,224 @@ if (isset($_COOKIE['remember_admin'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Secure Admin Portal - San Francisco High School Attendance Management">
-    <meta name="theme-color" content="#4CAF50">
+    <meta name="theme-color" content="#059669">
     <title>Admin Portal - San Francisco High School</title>
-    
-    <!-- Preload critical assets -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="../css/asj-admin-theme.css">
-    
-    <!-- Favicon -->
+
+    <link rel="stylesheet" href="../css/auth-glassmorphism.css?v=<?php echo time(); ?>">
+
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
 </head>
-<body>
-    <!-- Background Effects -->
-    <div class="background-gradient"></div>
-    <div class="background-shapes">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
-        <div class="shape shape-3"></div>
-    </div>
-
-    <!-- Dark Mode Toggle -->
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-        <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        </svg>
-        <svg class="moon-icon hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-    </button>
-
-    <!-- Main Container -->
-    <div class="login-container">
-        <div class="login-card" id="loginCard">
-            <!-- Logo & Header -->
-            <div class="login-header">
-                <div class="logo-container">
-                    <img src="../assets/asj-logo.png" alt="San Francisco High School Logo" onerror="this.style.display='none';">
-                </div>
-                <h1 class="login-title">San Francisco High School</h1>
-                <h2 class="login-subtitle-small">San Francisco</h2>
-                <p class="login-subtitle">Admin Portal - San Francisco High School</p>
+<body class="auth-page">
+    <!-- Hero Carousel Background -->
+    <div class="auth-wrapper">
+        <div class="auth-hero">
+            <div class="carousel-track" id="carouselTrack">
+                <div class="carousel-slide"><img src="../assets/image/building1.jpg" alt="Campus Building 1"></div>
+                <div class="carousel-slide"><img src="../assets/image/building2.jpg" alt="Campus Building 2"></div>
+                <div class="carousel-slide"><img src="../assets/image/building3.jpg" alt="Campus Building 3"></div>
+                <div class="carousel-slide"><img src="../assets/images/SFHSbuildingHB.jpg" alt="SFHS Heritage Building"></div>
+                <div class="carousel-slide"><img src="../assets/images/HB Building.jpg" alt="HB Building"></div>
             </div>
-
-            <!-- Alert Messages -->
-            <?php if (isset($_SESSION['access_denied'])): ?>
-            <div class="alert alert-error" id="accessDeniedAlert">
-                <svg class="alert-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M4.93 4.93l14.14 14.14"></path>
-                </svg>
-                <div class="alert-content">
-                    <strong>Access Denied</strong>
-                    <p><?php echo htmlspecialchars($_SESSION['access_denied']); ?></p>
-                </div>
-                <button class="alert-close" onclick="this.parentElement.remove()">×</button>
+            <div class="carousel-indicators" id="carouselIndicators">
+                <button class="carousel-dot active" data-index="0" aria-label="Slide 1"></button>
+                <button class="carousel-dot" data-index="1" aria-label="Slide 2"></button>
+                <button class="carousel-dot" data-index="2" aria-label="Slide 3"></button>
+                <button class="carousel-dot" data-index="3" aria-label="Slide 4"></button>
+                <button class="carousel-dot" data-index="4" aria-label="Slide 5"></button>
             </div>
-            <?php 
-                unset($_SESSION['access_denied']); 
-            endif; 
-            ?>
-            
-            <?php if (!empty($error_message)): ?>
-            <div class="alert alert-error" id="errorAlert">
-                <svg class="alert-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                </svg>
-                <div class="alert-content">
-                    <strong><?php echo $lockout_time > time() ? 'Account Locked' : 'Login Failed'; ?></strong>
-                    <p><?php echo htmlspecialchars($error_message); ?></p>
-                </div>
-                <button class="alert-close" onclick="this.parentElement.remove()">×</button>
+            <div class="auth-hero-content">
+                <h2>San Francisco High School</h2>
+                <p>Digital Attendance Management Portal — Integrity, Service, Excellence, Empowerment</p>
             </div>
-            <?php endif; ?>
+        </div>
 
-            <!-- Login Form -->
-            <form class="login-form" id="loginForm" method="POST" action="" novalidate>
-                <!-- Username Input -->
-                <div class="input-group" data-validate="required">
-                    <div class="input-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
+        <div class="auth-orb auth-orb-1"></div>
+        <div class="auth-orb auth-orb-2"></div>
+        <div class="auth-orb auth-orb-3"></div>
+
+        <!-- Form Panel -->
+        <div class="auth-panel">
+            <div class="auth-card" id="loginCard">
+                <!-- Logo & Header -->
+                <div class="auth-header">
+                    <div class="auth-logo">
+                        <img src="../assets/images/Logo.png" alt="San Francisco High School Logo" onerror="this.style.display='none'">
                     </div>
-                    <input 
-                        type="text" 
-                        id="username" 
-                        name="username"
-                        placeholder=" " 
-                        autocomplete="username"
-                        value="<?php echo htmlspecialchars($remembered_username); ?>"
-                        required
-                        autofocus
-                    >
-                    <label for="username">Username or Email</label>
-                    <div class="input-border"></div>
-                    <div class="input-status">
-                        <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        <svg class="error-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
-                    </div>
-                    <div class="input-error-message">Please enter a valid username or email</div>
+                    <h1 class="auth-title">Admin Portal</h1>
+                    <p class="auth-school-name">San Francisco High School</p>
+                    <p class="auth-subtitle">Sign in to manage attendance</p>
                 </div>
 
-                <!-- Password Input -->
-                <div class="input-group" data-validate="required">
-                    <div class="input-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                        </svg>
+                <!-- Alert Messages -->
+                <?php if (isset($_SESSION['access_denied'])): ?>
+                <div class="auth-alert auth-alert-error" id="accessDeniedAlert">
+                    <svg class="auth-alert-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M4.93 4.93l14.14 14.14"></path>
+                    </svg>
+                    <div class="auth-alert-body">
+                        <strong>Access Denied</strong>
+                        <p><?php echo htmlspecialchars($_SESSION['access_denied']); ?></p>
                     </div>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password"
-                        placeholder=" " 
-                        autocomplete="current-password"
-                        required
-                    >
-                    <label for="password">Password</label>
-                    <button type="button" class="toggle-password" aria-label="Toggle password visibility">
-                        <svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                            <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
-                        <svg class="eye-slash-icon hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                            <line x1="1" y1="1" x2="23" y2="23"></line>
-                        </svg>
-                    </button>
-                    <div class="input-border"></div>
-                    <div class="input-status">
-                        <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        <svg class="error-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
-                    </div>
-                    <div class="caps-lock-warning hidden">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M7 15l5-5 5 5H7z"/>
-                        </svg>
-                        <span>Caps Lock is ON</span>
-                    </div>
-                    <div class="input-error-message">Password must be at least 6 characters</div>
+                    <button class="auth-alert-close" onclick="this.parentElement.remove()">&times;</button>
                 </div>
+                <?php 
+                    unset($_SESSION['access_denied']); 
+                endif; 
+                ?>
 
-                <!-- Remember Me & Forgot Password -->
-                <div class="form-options">
-                    <label class="checkbox-container">
-                        <input type="checkbox" name="remember" id="remember">
-                        <span class="checkmark">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4">
-                                <polyline points="20 6 9 17 4 12"></polyline>
+                <?php if (!empty($error_message)): ?>
+                <div class="auth-alert auth-alert-error" id="errorAlert">
+                    <svg class="auth-alert-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <div class="auth-alert-body">
+                        <strong><?php echo $lockout_time > time() ? 'Account Locked' : 'Login Failed'; ?></strong>
+                        <p><?php echo htmlspecialchars($error_message); ?></p>
+                    </div>
+                    <button class="auth-alert-close" onclick="this.parentElement.remove()">&times;</button>
+                </div>
+                <?php endif; ?>
+
+                <!-- Login Form -->
+                <form class="auth-form" id="loginForm" method="POST" action="" novalidate>
+                    <!-- Username -->
+                    <div class="auth-input-group" data-validate="required">
+                        <div class="auth-input-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
                             </svg>
+                        </div>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            name="username"
+                            placeholder=" " 
+                            autocomplete="username"
+                            value="<?php echo htmlspecialchars($remembered_username); ?>"
+                            required
+                            autofocus
+                        >
+                        <label for="username">Username or Email</label>
+                        <div class="auth-input-accent"></div>
+                        <div class="auth-input-status">
+                            <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <svg class="error-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </div>
+                        <div class="auth-input-error">Please enter a valid username or email</div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="auth-input-group" data-validate="required">
+                        <div class="auth-input-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                        </div>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password"
+                            placeholder=" " 
+                            autocomplete="current-password"
+                            required
+                        >
+                        <label for="password">Password</label>
+                        <button type="button" class="auth-toggle-pw" aria-label="Toggle password visibility">
+                            <svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            <svg class="eye-slash-icon hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                <line x1="1" y1="1" x2="23" y2="23"></line>
+                            </svg>
+                        </button>
+                        <div class="auth-input-accent"></div>
+                        <div class="auth-input-status">
+                            <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <svg class="error-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </div>
+                        <div class="auth-caps-warn hidden">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 15l5-5 5 5H7z"/></svg>
+                            <span>Caps Lock is ON</span>
+                        </div>
+                        <div class="auth-input-error">Password must be at least 6 characters</div>
+                    </div>
+
+                    <!-- Remember & Forgot -->
+                    <div class="auth-form-options">
+                        <label class="auth-checkbox">
+                            <input type="checkbox" name="remember" id="remember">
+                            <span class="auth-checkmark">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </span>
+                            <span>Remember me</span>
+                        </label>
+                        <a href="forgot_password.php" class="auth-forgot-link">Forgot password?</a>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="auth-btn auth-btn-primary" id="btnSignin">
+                        <span class="btn-text">
+                            <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
+                            </svg>
+                            Sign In
                         </span>
-                        <span class="checkbox-label">Remember me</span>
-                    </label>
-                    <a href="forgot_password.php" class="forgot-link">Forgot password?</a>
+                        <span class="btn-loader hidden">
+                            <svg class="auth-spinner" width="20" height="20" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="31.4 31.4" transform="rotate(-90 12 12)"/>
+                            </svg>
+                            Signing in...
+                        </span>
+                    </button>
+                </form>
+
+                <!-- Footer -->
+                <div class="auth-footer">
+                    <p>&copy; <?php echo date('Y'); ?> San Francisco High School.</p>
+                    <p class="footer-motto">Integrity, Service, Excellence, Empowerment</p>
                 </div>
 
-                <!-- Submit Button -->
-                <button type="submit" class="btn-signin" id="btnSignin">
-                    <span class="btn-text">
-                        <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
-                        </svg>
-                        Sign In
-                    </span>
-                    <span class="btn-loader hidden">
-                        <svg class="spinner" width="20" height="20" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="31.4 31.4" transform="rotate(-90 12 12)"/>
-                        </svg>
-                        Signing in...
-                    </span>
-                </button>
-
-            </form>
-
-            <!-- School Footer -->
-            <div class="school-footer">
-                <p>© 2025 San Francisco High School.</p>
-                <p class="footer-subtitle">Integrity, Service, Excellence, Empowerment</p>
-            </div>
-
-            <!-- Security Badge -->
-            <div class="security-badge">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                </svg>
-                <span>Protected by 256-bit encryption</span>
-            </div>
-            <div class="security-details">
-                SSL Secured • SOC 2 Compliant • GDPR Ready
+                <div class="auth-security">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <span>Protected by 256-bit encryption</span>
+                </div>
+                <div class="auth-security-detail">SSL Secured &bull; SOC 2 Compliant &bull; GDPR Ready</div>
             </div>
         </div>
     </div>
 
     <!-- Success Modal -->
-    <div class="success-modal hidden" id="successModal">
-        <div class="success-content">
-            <div class="success-checkmark">
-                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <div class="auth-success-modal hidden" id="successModal">
+        <div class="auth-success-content">
+            <div class="auth-success-check">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                     <polyline points="22 4 12 14.01 9 11.01"></polyline>
                 </svg>
             </div>
             <h2>Welcome back, <span id="welcomeName">Admin</span>!</h2>
             <p>Redirecting to dashboard...</p>
-            <div class="progress-bar">
-                <div class="progress-fill"></div>
+            <div class="auth-progress-bar">
+                <div class="auth-progress-fill"></div>
             </div>
         </div>
     </div>
 
     <script src="../js/admin-login.js"></script>
+    <script src="../js/auth-carousel.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

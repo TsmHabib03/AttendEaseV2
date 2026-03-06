@@ -209,42 +209,36 @@ include 'includes/header_modern.php';
 
 <!-- External CSS loaded via $additionalCSS array -->
 
-<!-- Page Header - Enhanced Design (Matching manage_sections.php) -->
-<div class="page-header-enhanced">
-    <div class="page-header-background">
-        <div class="header-gradient-overlay"></div>
-        <div class="header-pattern"></div>
-    </div>
-    <div class="page-header-content-enhanced">
-        <div class="page-title-section">
-            <div class="page-icon-enhanced">
-                <i class="fas fa-<?php echo $pageIcon; ?>"></i>
-            </div>
-            <div class="page-title-content">
-                <div class="breadcrumb-nav">
-                    <a href="dashboard.php" class="breadcrumb-link">
-                        <i class="fas fa-home"></i>
-                        <span>Dashboard</span>
-                    </a>
-                    <i class="fas fa-chevron-right breadcrumb-separator"></i>
-                    <span class="breadcrumb-current"><?php echo $pageTitle; ?></span>
-                </div>
-                <h1 class="page-title-enhanced"><?php echo $pageTitle; ?></h1>
-                <p class="page-subtitle-enhanced">
-                    <i class="fas fa-clock"></i>
-                    <span>Mark time in/out manually or scan QR codes for fast check-in</span>
-                </p>
-            </div>
-        </div>
-        <div class="page-actions-enhanced">
-            <button class="btn-header btn-header-secondary" onclick="window.location.reload()">
-                <i class="fas fa-sync-alt"></i>
-                <span>Refresh</span>
-            </button>
-            <a href="view_students.php" class="btn-header btn-header-primary">
-                <i class="fas fa-users"></i>
-                <span>View Students</span>
+<!-- Page Header — Glassmorphism Bento -->
+<div class="page-header-glass">
+    <div class="page-header-inner">
+        <nav class="breadcrumb-glass" aria-label="Breadcrumb">
+            <a href="dashboard.php" class="breadcrumb-item" title="Dashboard">
+                <i class="fas fa-home"></i> Dashboard
             </a>
+            <span class="breadcrumb-sep" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
+            <span class="breadcrumb-item active" aria-current="page">
+                <i class="fas fa-<?php echo $pageIcon; ?>"></i> <?php echo $pageTitle; ?>
+            </span>
+        </nav>
+        <div class="page-header-content-glass">
+            <div class="page-header-title-row">
+                <div class="page-header-icon">
+                    <i class="fas fa-<?php echo $pageIcon; ?>"></i>
+                </div>
+                <div class="page-header-text">
+                    <h1><?php echo $pageTitle; ?></h1>
+                    <p><i class="fas fa-clock"></i> Mark time in/out manually or scan QR codes for fast check-in</p>
+                </div>
+            </div>
+            <div class="page-header-actions">
+                <button class="btn-header-glass secondary" onclick="window.location.reload()">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <a href="view_students.php" class="btn-header-glass primary">
+                    <i class="fas fa-users"></i> View Students
+                </a>
+            </div>
         </div>
     </div>
 </div>

@@ -55,54 +55,6 @@ include 'includes/header_modern.php';
         --info-dark: #2563EB;
     }
 
-    /* ===== PAGE HEADER ENHANCED ===== */
-    .page-header-enhanced {
-        background: linear-gradient(135deg, var(--asj-green-500) 0%, var(--asj-green-700) 100%);
-        border-radius: var(--radius-2xl);
-        padding: var(--space-8);
-        margin-bottom: var(--space-6);
-        color: white;
-        box-shadow: 0 10px 40px -10px rgba(76, 175, 80, 0.4);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .page-header-enhanced::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -10%;
-        width: 300px;
-        height: 300px;
-        background: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
-        border-radius: 50%;
-    }
-
-    .page-header-content {
-        position: relative;
-        z-index: 1;
-    }
-
-    .page-header-content h1 {
-        font-size: var(--text-3xl);
-        font-weight: var(--font-bold);
-        margin-bottom: var(--space-2);
-        display: flex;
-        align-items: center;
-        gap: var(--space-3);
-        color: white;
-    }
-
-    .page-header-content h1 i {
-        font-size: var(--text-4xl);
-    }
-
-    .page-header-content p {
-        font-size: var(--text-lg);
-        opacity: 0.95;
-        margin: 0;
-    }
-
     /* ===== FILTERS SECTION ===== */
     .filters-card {
         background: white;
@@ -496,18 +448,6 @@ include 'includes/header_modern.php';
 
     /* ===== RESPONSIVE DESIGN ===== */
     @media (max-width: 768px) {
-        .page-header-enhanced {
-            padding: var(--space-6);
-        }
-
-        .page-header-content h1 {
-            font-size: var(--text-2xl);
-        }
-
-        .page-header-content h1 i {
-            font-size: var(--text-3xl);
-        }
-
         .filters-grid {
             grid-template-columns: 1fr;
         }
@@ -557,10 +497,6 @@ include 'includes/header_modern.php';
     }
 
     @media (max-width: 480px) {
-        .page-header-enhanced {
-            padding: var(--space-4);
-        }
-
         .filters-body,
         .results-body {
             padding: var(--space-4);
@@ -578,7 +514,7 @@ include 'includes/header_modern.php';
 
     /* ===== PRINT STYLES ===== */
     @media print {
-        .page-header-enhanced,
+        .page-header-glass,
         .filters-card,
         .results-header .results-actions,
         .pagination-wrapper,
@@ -609,14 +545,29 @@ include 'includes/header_modern.php';
     }
 </style>
 
-<!-- Page Header -->
-<div class="page-header-enhanced">
-    <div class="page-header-content">
-        <h1>
-            <i class="fas fa-chart-bar"></i>
-            Attendance Reports
-        </h1>
-        <p>Generate comprehensive attendance reports by section and date range</p>
+<!-- Page Header — Glassmorphism Bento -->
+<div class="page-header-glass">
+    <div class="page-header-inner">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb-glass" aria-label="Breadcrumb">
+            <a href="dashboard.php" class="breadcrumb-item" title="Dashboard">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            <span class="breadcrumb-sep" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
+            <span class="breadcrumb-item active" aria-current="page">
+                <i class="fas fa-chart-bar"></i> Attendance Reports
+            </span>
+        </nav>
+        <!-- Title -->
+        <div class="page-header-title-row">
+            <div class="page-header-icon">
+                <i class="fas fa-chart-bar"></i>
+            </div>
+            <div class="page-header-text">
+                <h1>Attendance Reports</h1>
+                <p>Generate comprehensive attendance reports by section and date range</p>
+            </div>
+        </div>
     </div>
 </div>
 

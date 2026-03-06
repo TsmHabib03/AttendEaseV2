@@ -13,22 +13,22 @@ const btnSignin = document.getElementById('btnSignin');
 const themeToggle = document.getElementById('themeToggle');
 const successModal = document.getElementById('successModal');
 
-// Get all toggle password buttons
-const togglePasswordBtns = document.querySelectorAll('.toggle-password');
+// Get all toggle password buttons (supports both old and new markup)
+const togglePasswordBtns = document.querySelectorAll('.toggle-password, .auth-toggle-pw');
 
 // ===== Theme Management =====
 function initializeTheme() {
-    // Load saved theme preference or default to light
+    if (!themeToggle) return;
     const savedTheme = localStorage.getItem('adminTheme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
-    
-    // Update toggle button icon
     updateThemeIcon(savedTheme);
 }
 
 function updateThemeIcon(theme) {
+    if (!themeToggle) return;
     const sunIcon = themeToggle.querySelector('.sun-icon');
     const moonIcon = themeToggle.querySelector('.moon-icon');
+    if (!sunIcon || !moonIcon) return;
     
     if (theme === 'dark') {
         sunIcon.classList.remove('hidden');
@@ -40,18 +40,19 @@ function updateThemeIcon(theme) {
 }
 
 // Theme toggle event
-themeToggle.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('adminTheme', newTheme);
-    updateThemeIcon(newTheme);
-});
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('adminTheme', newTheme);
+        updateThemeIcon(newTheme);
+    });
+}
 
 // ===== Input Validation =====
 function validateField(input) {
-    const inputGroup = input.closest('.input-group');
+    const inputGroup = input.closest('.input-group, .auth-input-group');
     const value = input.value.trim();
     let isValid = false;
     
@@ -100,8 +101,8 @@ function setupValidation() {
         
         // Re-validate on input if field is invalid
         input.addEventListener('input', () => {
-            const inputGroup = input.closest('.input-group');
-            if (inputGroup.classList.contains('invalid')) {
+            const inputGroup = input.closest('.input-group, .auth-input-group');
+            if (inputGroup && inputGroup.classList.contains('invalid')) {
                 validateField(input);
             }
         });
@@ -109,8 +110,8 @@ function setupValidation() {
         // Clear validation state when input is cleared
         input.addEventListener('input', () => {
             if (input.value.trim() === '') {
-                const inputGroup = input.closest('.input-group');
-                inputGroup.classList.remove('valid', 'invalid');
+                const inputGroup = input.closest('.input-group, .auth-input-group');
+                if (inputGroup) inputGroup.classList.remove('valid', 'invalid');
             }
         });
     });
@@ -140,7 +141,8 @@ function setupPasswordToggle() {
 // ===== Caps Lock Detection =====
 function setupCapsLockDetection() {
     passwordInput.addEventListener('keydown', (e) => {
-        const capsLockWarning = passwordInput.closest('.input-group').querySelector('.caps-lock-warning');
+        const group = passwordInput.closest('.input-group, .auth-input-group');
+        const capsLockWarning = group ? group.querySelector('.caps-lock-warning, .auth-caps-warn') : null;
         
         if (capsLockWarning) {
             const isCapsLock = e.getModifierState && e.getModifierState('CapsLock');
@@ -155,7 +157,8 @@ function setupCapsLockDetection() {
     
     // Hide caps lock warning when input loses focus
     passwordInput.addEventListener('blur', () => {
-        const capsLockWarning = passwordInput.closest('.input-group').querySelector('.caps-lock-warning');
+        const group = passwordInput.closest('.input-group, .auth-input-group');
+        const capsLockWarning = group ? group.querySelector('.caps-lock-warning, .auth-caps-warn') : null;
         if (capsLockWarning) {
             capsLockWarning.classList.add('hidden');
         }
@@ -209,7 +212,8 @@ function setupFormSubmission() {
                 
                 // Clear password field on error
                 passwordInput.value = '';
-                passwordInput.closest('.input-group').classList.remove('valid', 'invalid');
+                const pwGroup = passwordInput.closest('.input-group, .auth-input-group');
+                if (pwGroup) pwGroup.classList.remove('valid', 'invalid');
                 passwordInput.focus();
             }
         } catch (error) {
@@ -234,6 +238,7 @@ function setLoadingState(isLoading) {
 
 // ===== Card Shake Animation =====
 function shakeCard() {
+    if (!loginCard) return;
     loginCard.classList.add('shake');
     setTimeout(() => {
         loginCard.classList.remove('shake');
@@ -243,30 +248,30 @@ function shakeCard() {
 // ===== Error Display =====
 function showError(message) {
     // Check if error alert already exists
-    let errorAlert = document.querySelector('.alert-error');
+    let errorAlert = document.querySelector('.alert-error, .auth-alert-error');
     
     if (!errorAlert) {
         // Create new error alert
         errorAlert = document.createElement('div');
-        errorAlert.className = 'alert alert-error';
+        errorAlert.className = 'auth-alert auth-alert-error';
         errorAlert.innerHTML = `
-            <svg class="alert-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="auth-alert-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="12" y1="8" x2="12" y2="12"></line>
                 <line x1="12" y1="16" x2="12.01" y2="16"></line>
             </svg>
-            <div class="alert-content">
+            <div class="auth-alert-body">
                 <strong>Login Failed</strong>
                 <p>${message}</p>
             </div>
-            <button class="alert-close" onclick="this.parentElement.remove()">×</button>
+            <button class="auth-alert-close" onclick="this.parentElement.remove()">&times;</button>
         `;
         
         // Insert before the form
         loginForm.parentElement.insertBefore(errorAlert, loginForm);
     } else {
         // Update existing error message
-        const errorMessage = errorAlert.querySelector('.alert-content p');
+        const errorMessage = errorAlert.querySelector('.alert-content p, .auth-alert-body p');
         if (errorMessage) {
             errorMessage.textContent = message;
         }
@@ -323,7 +328,7 @@ function setupAutofillDetection() {
     const checkAutofill = () => {
         [usernameInput, passwordInput].forEach(input => {
             if (input && input.value) {
-                const inputGroup = input.closest('.input-group');
+                const inputGroup = input.closest('.input-group, .auth-input-group');
                 // Trigger validation for autofilled inputs
                 if (input.value.trim() !== '') {
                     validateField(input);

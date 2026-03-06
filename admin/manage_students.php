@@ -709,58 +709,49 @@ include 'includes/header_modern.php';
     }
 </style>
 
-<!-- Page Header - Enhanced Design -->
-<div class="page-header-enhanced">
-    <div class="page-header-background">
-        <div class="header-gradient-overlay"></div>
-        <div class="header-pattern"></div>
-    </div>
-    <div class="page-header-content-enhanced">
-        <div class="page-title-section">
-            <div class="page-icon-enhanced">
-                <i class="fas fa-<?php echo $pageIcon; ?>"></i>
-            </div>
-            <div class="page-title-content">
-                <div class="breadcrumb-nav">
-                    <a href="dashboard.php" class="breadcrumb-link">
-                        <i class="fas fa-home"></i>
-                        <span>Dashboard</span>
-                    </a>
-                    <i class="fas fa-chevron-right breadcrumb-separator"></i>
-                    <a href="view_students.php" class="breadcrumb-link">
-                        <i class="fas fa-users"></i>
-                        <span>Students</span>
-                    </a>
-                    <i class="fas fa-chevron-right breadcrumb-separator"></i>
-                    <span class="breadcrumb-current"><?php echo $pageTitle; ?></span>
+<!-- Page Header — Glassmorphism Bento -->
+<div class="page-header-glass">
+    <div class="page-header-inner">
+        <nav class="breadcrumb-glass" aria-label="Breadcrumb">
+            <a href="dashboard.php" class="breadcrumb-item" title="Dashboard">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            <span class="breadcrumb-sep" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
+            <a href="view_students.php" class="breadcrumb-item" title="Students">
+                <i class="fas fa-users"></i> Students
+            </a>
+            <span class="breadcrumb-sep" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
+            <span class="breadcrumb-item active" aria-current="page">
+                <i class="fas fa-<?php echo $pageIcon; ?>"></i> <?php echo $pageTitle; ?>
+            </span>
+        </nav>
+        <div class="page-header-content-glass">
+            <div class="page-header-title-row">
+                <div class="page-header-icon">
+                    <i class="fas fa-<?php echo $pageIcon; ?>"></i>
                 </div>
-                <h1 class="page-title-enhanced"><?php echo $pageTitle; ?></h1>
-                <p class="page-subtitle-enhanced">
-                    <i class="fas fa-info-circle"></i>
-                    <span><?php echo $editMode ? 'Update student information and manage records' : 'Register a new student in the system'; ?></span>
-                </p>
+                <div class="page-header-text">
+                    <h1><?php echo $pageTitle; ?></h1>
+                    <p><i class="fas fa-info-circle"></i> <?php echo $editMode ? 'Update student information and manage records' : 'Register a new student in the system'; ?></p>
+                </div>
             </div>
-        </div>
-        <div class="page-actions-enhanced">
-            <?php if ($editMode): ?>
-                <button class="btn-header btn-header-secondary" onclick="window.location.reload()">
-                    <i class="fas fa-sync-alt"></i>
-                    <span>Refresh</span>
-                </button>
-                <a href="manage_students.php" class="btn-header btn-header-primary">
-                    <i class="fas fa-user-plus"></i>
-                    <span>Add New</span>
-                </a>
-            <?php else: ?>
-                <a href="view_students.php" class="btn-header btn-header-secondary">
-                    <i class="fas fa-list"></i>
-                    <span>View All</span>
-                </a>
-                <button class="btn-header btn-header-primary" onclick="document.getElementById('lrn').focus()">
-                    <i class="fas fa-keyboard"></i>
-                    <span>Quick Start</span>
-                </button>
-            <?php endif; ?>
+            <div class="page-header-actions">
+                <?php if ($editMode): ?>
+                    <button class="btn-header-glass secondary" onclick="window.location.reload()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                    <a href="manage_students.php" class="btn-header-glass primary">
+                        <i class="fas fa-user-plus"></i> Add New
+                    </a>
+                <?php else: ?>
+                    <a href="view_students.php" class="btn-header-glass secondary">
+                        <i class="fas fa-list"></i> View All
+                    </a>
+                    <button class="btn-header-glass primary" onclick="document.getElementById('lrn').focus()">
+                        <i class="fas fa-keyboard"></i> Quick Start
+                    </button>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 </div>

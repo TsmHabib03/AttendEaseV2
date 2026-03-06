@@ -30,6 +30,15 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
     <!-- Admin Bento Layout CSS -->
     <link rel="stylesheet" href="../css/admin-bento.css">
     
+    <!-- Glassmorphism Sidebar & Topbar -->
+    <link rel="stylesheet" href="../css/glassmorphism-sidebar-topbar.css">
+    
+    <!-- Glassmorphism Page Header -->
+    <link rel="stylesheet" href="../css/glassmorphism-header.css">
+    
+    <!-- Dashboard Glass Enhancements -->
+    <link rel="stylesheet" href="../css/dashboard-glass.css">
+    
     <!-- Chart.js for dashboard -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     
@@ -47,6 +56,11 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
     <div class="admin-layout">
         <!-- Desktop Sidebar -->
         <aside class="admin-sidebar">
+            <!-- Collapse toggle (desktop, appears on hover) -->
+            <button class="sidebar-collapse-btn" onclick="toggleSidebarCollapse()" aria-label="Collapse sidebar" title="Collapse sidebar">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
             <div class="sidebar-header">
                 <div class="sidebar-logo">
                     <div class="sidebar-logo-icon">
@@ -119,19 +133,72 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
             <!-- Top Bar -->
             <header class="admin-topbar">
                 <div class="topbar-left">
-                    <button class="topbar-menu-btn" onclick="toggleAdminMenu()" aria-label="Toggle menu">
+                    <button class="topbar-menu-btn" onclick="toggleAdminMenu()" aria-label="Toggle navigation">
                         <i class="fas fa-bars"></i>
                     </button>
-                    <div class="topbar-title-group">
-                        <h1 class="topbar-title">
-                            <i class="fas fa-<?php echo isset($pageIcon) ? $pageIcon : 'home'; ?>"></i>
-                            <?php echo isset($pageTitle) ? $pageTitle : 'Dashboard'; ?>
-                        </h1>
+                    <h1 class="topbar-title">
+                        <i class="fas fa-<?php echo isset($pageIcon) ? $pageIcon : 'home'; ?>"></i>
+                        <?php echo isset($pageTitle) ? sanitizeOutput($pageTitle) : 'Dashboard'; ?>
+                    </h1>
+                    <div class="topbar-search">
+                        <i class="fas fa-search topbar-search-icon"></i>
+                        <input type="text" class="topbar-search-input" placeholder="Search pages..." aria-label="Search pages" autocomplete="off">
+                        <div class="topbar-search-results" role="listbox"></div>
                     </div>
                 </div>
                 <div class="topbar-right">
-                    <div class="topbar-avatar">
-                        <?php echo isset($currentAdmin) ? strtoupper(substr($currentAdmin['username'], 0, 1)) : 'A'; ?>
+                    <a href="../scan_attendance.php" class="topbar-action-btn" target="_blank" title="Open QR Scanner">
+                        <i class="fas fa-qrcode"></i>
+                        <span>Scanner</span>
+                    </a>
+                    <div class="topbar-notif">
+                        <button class="topbar-notif-btn" onclick="toggleNotifDropdown(event)" aria-label="Notifications">
+                            <i class="fas fa-bell"></i>
+                            <span class="topbar-notif-badge">0</span>
+                        </button>
+                        <div class="topbar-notif-dropdown" role="menu">
+                            <div class="topbar-notif-dropdown-header">
+                                <span class="topbar-notif-dropdown-title">Notifications</span>
+                                <button class="topbar-notif-mark-read">Mark all read</button>
+                            </div>
+                            <div class="topbar-notif-dropdown-body">
+                                <div class="topbar-notif-empty">
+                                    <i class="fas fa-bell-slash"></i>
+                                    <p>No new notifications</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="topbar-user-menu">
+                        <button class="topbar-user-btn" onclick="toggleUserDropdown(event)" aria-label="User menu" aria-expanded="false">
+                            <div class="topbar-avatar">
+                                <?php echo isset($currentAdmin) ? strtoupper(substr($currentAdmin['username'], 0, 1)) : 'A'; ?>
+                            </div>
+                            <div class="topbar-user-info">
+                                <span class="topbar-user-name"><?php echo isset($currentAdmin) ? sanitizeOutput($currentAdmin['username']) : 'Admin'; ?></span>
+                                <span class="topbar-user-role"><?php echo isset($currentAdmin) ? sanitizeOutput($currentAdmin['role']) : 'Administrator'; ?></span>
+                            </div>
+                            <i class="fas fa-chevron-down topbar-user-chevron"></i>
+                        </button>
+                        <div class="topbar-dropdown" role="menu">
+                            <div class="topbar-dropdown-header">
+                                <div class="topbar-dropdown-avatar">
+                                    <?php echo isset($currentAdmin) ? strtoupper(substr($currentAdmin['username'], 0, 1)) : 'A'; ?>
+                                </div>
+                                <div>
+                                    <div class="topbar-dropdown-name"><?php echo isset($currentAdmin) ? sanitizeOutput($currentAdmin['username']) : 'Admin'; ?></div>
+                                    <div class="topbar-dropdown-role"><?php echo isset($currentAdmin) ? sanitizeOutput($currentAdmin['role']) : 'Administrator'; ?></div>
+                                </div>
+                            </div>
+                            <div class="topbar-dropdown-divider"></div>
+                            <a href="dashboard.php" class="topbar-dropdown-item" role="menuitem">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                            <div class="topbar-dropdown-divider"></div>
+                            <a href="logout.php" class="topbar-dropdown-item topbar-dropdown-danger" role="menuitem">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </div>
                     </div>
                 </div>
             </header>

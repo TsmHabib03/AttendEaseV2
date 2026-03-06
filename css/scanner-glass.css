@@ -1,0 +1,756 @@
+/* ============================================================================
+   SCANNER PAGE — GLASSMORPHISM REDESIGN
+   Spacious, mobile-first, full-width on small screens
+   Load AFTER admin-bento.css
+   ============================================================================ */
+
+
+/* ══════════════════════════════════════════════════════════════════
+   1. PAGE SHELL
+   ══════════════════════════════════════════════════════════════ */
+
+.scanner-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   2. TOPBAR — GLASS HEADER WITH GREEN ACCENT
+   ══════════════════════════════════════════════════════════════ */
+
+.scan-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-3) var(--sp-5);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(236, 253, 245, 0.82) 100%
+    );
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.10);
+  box-shadow: 0 2px 20px rgba(16, 185, 129, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Emerald accent strip */
+.scan-topbar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--green-400), var(--green-500), var(--green-600));
+}
+
+.scan-topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.scan-topbar-brand:hover {
+  opacity: 0.85;
+}
+
+.scan-topbar-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-lg);
+  object-fit: contain;
+  background: var(--white);
+  box-shadow:
+    0 0 0 2px rgba(16, 185, 129, 0.10),
+    0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.scan-topbar-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--gray-800);
+  letter-spacing: -0.01em;
+}
+
+.scan-topbar-sub {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--green-600);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.scan-topbar-menu {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(16, 185, 129, 0.10);
+  border-radius: var(--r-lg);
+  background: rgba(255, 255, 255, 0.60);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--green-600);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: all 0.25s ease;
+}
+
+.scan-topbar-menu:hover {
+  background: var(--green-500);
+  color: var(--white);
+  border-color: var(--green-500);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+  transform: scale(1.05);
+}
+
+.scan-topbar-menu:active {
+  transform: scale(0.96);
+}
+
+.scan-topbar-menu:focus-visible {
+  outline: 2px solid var(--green-500);
+  outline-offset: 2px;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   3. SCANNER BODY — SPACIOUS CENTERED LAYOUT
+   ══════════════════════════════════════════════════════════════ */
+
+.scan-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--sp-6) var(--sp-4) var(--sp-8);
+  max-width: 640px;
+  width: 100%;
+  margin: 0 auto;
+  gap: var(--sp-6);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   4. STATUS BAR — GLASS PILL
+   ══════════════════════════════════════════════════════════════ */
+
+.scan-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-5);
+  border-radius: var(--r-pill);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.70) 0%,
+      rgba(236, 253, 245, 0.50) 100%
+    );
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(16, 185, 129, 0.12);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--gray-600);
+  width: fit-content;
+  transition: box-shadow 0.2s ease;
+}
+
+.scan-status i {
+  color: var(--green-500);
+  font-size: 0.82rem;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   5. CAMERA VIEWPORT — LARGE GLASS CARD
+   ══════════════════════════════════════════════════════════════ */
+
+.scan-viewport {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 460px;
+  border-radius: var(--r-2xl);
+  overflow: hidden;
+  background: linear-gradient(135deg, #0a0f1a 0%, #111827 100%);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(16, 185, 129, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.scan-viewport.scanning {
+  border-color: rgba(16, 185, 129, 0.30);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(16, 185, 129, 0.20),
+    0 0 40px rgba(16, 185, 129, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Scanner frame corners — vibrant green */
+.scan-frame::before,
+.scan-frame::after,
+.scan-frame-bl::before,
+.scan-frame-br::before {
+  border-color: var(--green-400);
+  border-width: 0;
+  width: 32px;
+  height: 32px;
+  transition: border-color 0.3s ease;
+}
+
+.scan-frame::before  { border-top-width: 3px; border-left-width: 3px;  border-radius: 8px 0 0 0; }
+.scan-frame::after   { border-top-width: 3px; border-right-width: 3px; border-radius: 0 8px 0 0; }
+.scan-frame-bl::before { border-bottom-width: 3px; border-left-width: 3px;  border-radius: 0 0 0 8px; }
+.scan-frame-br::before { border-bottom-width: 3px; border-right-width: 3px; border-radius: 0 0 8px 0; }
+
+.scanning .scan-frame::before,
+.scanning .scan-frame::after,
+.scanning .scan-frame-bl::before,
+.scanning .scan-frame-br::before {
+  border-color: var(--green-300);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.30);
+}
+
+/* Laser — softer green glow */
+.scan-laser {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.8), transparent);
+  box-shadow:
+    0 0 16px rgba(16, 185, 129, 0.45),
+    0 0 4px rgba(16, 185, 129, 0.6);
+}
+
+/* Hint badge */
+.scan-hint {
+  padding: var(--sp-2) var(--sp-5);
+  border-radius: var(--r-pill);
+  background: rgba(0, 0, 0, 0.50);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.scan-hint i {
+  color: var(--green-300);
+}
+
+/* Loading overlay */
+.scan-loading {
+  background: rgba(10, 15, 26, 0.80);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.scan-loading .dash-loader-spinner {
+  width: 44px;
+  height: 44px;
+  border-width: 3px;
+  border-color: rgba(255, 255, 255, 0.18);
+  border-top-color: var(--green-400);
+}
+
+.scan-loading p {
+  color: rgba(255, 255, 255, 0.80);
+  font-size: 0.85rem;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   6. CONTROLS — FULL-WIDTH GLASS BUTTONS
+   ══════════════════════════════════════════════════════════════ */
+
+.scan-controls {
+  display: flex;
+  gap: var(--sp-3);
+  width: 100%;
+  max-width: 460px;
+}
+
+.scan-ctrl-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: var(--sp-4) var(--sp-3);
+  border-radius: var(--r-xl);
+  border: none;
+  font-family: var(--font-base);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 52px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Primary — Scan button */
+.scan-ctrl-primary {
+  background: linear-gradient(135deg, var(--green-500), var(--green-600));
+  color: var(--white);
+  box-shadow:
+    0 4px 18px rgba(16, 185, 129, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.scan-ctrl-primary:hover {
+  background: linear-gradient(135deg, var(--green-600), var(--green-700));
+  box-shadow:
+    0 8px 28px rgba(16, 185, 129, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.scan-ctrl-primary:active {
+  transform: translateY(0);
+  box-shadow:
+    0 2px 12px rgba(16, 185, 129, 0.20),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10);
+}
+
+.scan-ctrl-primary:focus-visible {
+  outline: 2px solid var(--green-500);
+  outline-offset: 3px;
+}
+
+/* Secondary — Manual entry */
+.scan-ctrl-secondary {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.72) 0%,
+      rgba(236, 253, 245, 0.55) 100%
+    );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--gray-600);
+  border: 1px solid rgba(16, 185, 129, 0.12);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.scan-ctrl-secondary:hover {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(236, 253, 245, 0.90) 0%,
+      rgba(209, 250, 229, 0.70) 100%
+    );
+  color: var(--green-700);
+  border-color: rgba(16, 185, 129, 0.22);
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.10);
+  transform: translateY(-1px);
+}
+
+.scan-ctrl-secondary:active {
+  transform: translateY(0);
+}
+
+.scan-ctrl-secondary:focus-visible {
+  outline: 2px solid var(--green-500);
+  outline-offset: 3px;
+}
+
+/* Danger — Stop */
+.scan-ctrl-danger {
+  background: linear-gradient(135deg, #EF4444, #DC2626);
+  color: var(--white);
+  box-shadow: 0 4px 18px rgba(239, 68, 68, 0.25);
+}
+
+.scan-ctrl-danger:hover {
+  background: linear-gradient(135deg, #DC2626, #B91C1C);
+  box-shadow: 0 6px 22px rgba(239, 68, 68, 0.32);
+  transform: translateY(-2px);
+}
+
+.scan-ctrl-danger:active {
+  transform: translateY(0);
+}
+
+.scan-ctrl-danger:focus-visible {
+  outline: 2px solid #EF4444;
+  outline-offset: 3px;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   7. RESULT OVERLAYS — REFINED
+   ══════════════════════════════════════════════════════════════ */
+
+.scan-result-overlay {
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.scan-result-overlay-success {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.96), rgba(4, 120, 87, 0.98));
+}
+
+.scan-result-overlay-error {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.96), rgba(153, 27, 27, 0.98));
+}
+
+.scan-result-icon {
+  width: 88px;
+  height: 88px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  font-size: 2.2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+}
+
+.scan-result-text h2 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.scan-result-text p {
+  font-size: 0.92rem;
+}
+
+.scan-result-btn {
+  padding: var(--sp-3) var(--sp-8);
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.30);
+  font-size: 0.88rem;
+  font-weight: 600;
+  min-height: 48px;
+  transition: all 0.25s ease;
+}
+
+.scan-result-btn:hover {
+  background: rgba(255, 255, 255, 0.26);
+  border-color: rgba(255, 255, 255, 0.40);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
+}
+
+.scan-result-btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 3px;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   8. MANUAL ENTRY MODAL — GLASS BOTTOM SHEET
+   ══════════════════════════════════════════════════════════════ */
+
+.scan-modal-backdrop {
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.scan-modal {
+  max-width: 600px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.98) 0%,
+      rgba(236, 253, 245, 0.95) 100%
+    );
+  backdrop-filter: blur(28px) saturate(1.4);
+  -webkit-backdrop-filter: blur(28px) saturate(1.4);
+  border-radius: var(--r-2xl) var(--r-2xl) 0 0;
+  padding: var(--sp-6) var(--sp-5) var(--sp-8);
+  box-shadow:
+    0 -12px 48px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  border-top: 1px solid rgba(16, 185, 129, 0.10);
+}
+
+/* Drag handle */
+.scan-modal::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--gray-300);
+  margin: 0 auto var(--sp-5);
+}
+
+.scan-modal-title {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.scan-modal-title i {
+  color: var(--green-500);
+}
+
+.scan-modal-close {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--r-lg);
+  border: 1px solid rgba(16, 185, 129, 0.08);
+  color: var(--gray-400);
+  transition: all 0.2s ease;
+}
+
+.scan-modal-close:hover {
+  background: rgba(239, 68, 68, 0.06);
+  color: #dc2626;
+  border-color: rgba(239, 68, 68, 0.12);
+}
+
+.scan-modal-close:focus-visible {
+  outline: 2px solid var(--green-500);
+  outline-offset: 2px;
+}
+
+.scan-modal-help {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.06), rgba(16, 185, 129, 0.03));
+  border: 1px solid rgba(16, 185, 129, 0.10);
+  border-radius: var(--r-lg);
+}
+
+.scan-modal-help i {
+  color: var(--green-500);
+}
+
+.scan-form-label i {
+  color: var(--green-500);
+}
+
+.scan-form-input {
+  border: 2px solid rgba(16, 185, 129, 0.12);
+  border-radius: var(--r-lg);
+  background: rgba(255, 255, 255, 0.80);
+  transition: all 0.25s ease;
+  font-size: 1rem;
+  padding: var(--sp-4);
+}
+
+.scan-form-input:hover {
+  border-color: rgba(16, 185, 129, 0.22);
+}
+
+.scan-form-input:focus {
+  border-color: var(--green-500);
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.10);
+  background: var(--white);
+}
+
+/* Submit button */
+.scan-modal .btn-primary {
+  background: linear-gradient(135deg, var(--green-500), var(--green-600));
+  border: none;
+  border-radius: var(--r-xl);
+  padding: var(--sp-4);
+  font-family: var(--font-base);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--white);
+  cursor: pointer;
+  min-height: 52px;
+  box-shadow: 0 4px 18px rgba(16, 185, 129, 0.25);
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+}
+
+.scan-modal .btn-primary:hover {
+  background: linear-gradient(135deg, var(--green-600), var(--green-700));
+  box-shadow: 0 6px 24px rgba(16, 185, 129, 0.32);
+  transform: translateY(-1px);
+}
+
+.scan-modal .btn-primary:active {
+  transform: translateY(0);
+}
+
+.scan-modal .btn-primary:focus-visible {
+  outline: 2px solid var(--green-500);
+  outline-offset: 3px;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   9. SIDE MENU — GLASS DRAWER
+   ══════════════════════════════════════════════════════════════ */
+
+.scan-sidemenu-backdrop {
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.scan-sidemenu {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.96) 0%,
+      rgba(236, 253, 245, 0.92) 100%
+    );
+  backdrop-filter: blur(28px) saturate(1.5);
+  -webkit-backdrop-filter: blur(28px) saturate(1.5);
+  box-shadow: -8px 0 40px rgba(0, 0, 0, 0.12);
+  border-left: 1px solid rgba(16, 185, 129, 0.08);
+}
+
+.scan-sidemenu-header {
+  border-bottom: 1px solid rgba(16, 185, 129, 0.10);
+}
+
+.scan-sidemenu-logo {
+  box-shadow:
+    0 0 0 2px rgba(16, 185, 129, 0.10),
+    0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.scan-sidemenu-info h3 {
+  font-size: 0.9rem;
+  letter-spacing: -0.01em;
+}
+
+.scan-sidemenu-link {
+  border-radius: var(--r-lg);
+  transition: all 0.25s ease;
+}
+
+.scan-sidemenu-link i {
+  color: var(--green-500);
+  transition: color 0.2s ease;
+}
+
+.scan-sidemenu-link:hover {
+  background: rgba(16, 185, 129, 0.06);
+  color: var(--green-700);
+  transform: translateX(-3px);
+}
+
+.scan-sidemenu-link:hover i {
+  color: var(--green-600);
+}
+
+.scan-sidemenu-link:focus-visible {
+  outline: 2px solid var(--green-500);
+  outline-offset: 2px;
+}
+
+.scan-sidemenu-link.active {
+  background: linear-gradient(90deg, rgba(16, 185, 129, 0.10), transparent);
+  color: var(--green-600);
+  font-weight: 600;
+  border-right: 3px solid var(--green-500);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   10. RESPONSIVE
+   ══════════════════════════════════════════════════════════════ */
+
+/* Small phones — full width scanner */
+@media (max-width: 480px) {
+  .scan-body {
+    padding: var(--sp-4) var(--sp-3) var(--sp-6);
+    gap: var(--sp-4);
+  }
+
+  .scan-viewport {
+    max-width: 100%;
+    border-radius: var(--r-xl);
+  }
+
+  .scan-controls {
+    max-width: 100%;
+    flex-direction: column;
+  }
+
+  .scan-ctrl-btn {
+    min-height: 50px;
+    font-size: 0.86rem;
+  }
+
+  .scan-topbar {
+    padding: var(--sp-2) var(--sp-3);
+  }
+
+  .scan-result-icon {
+    width: 72px;
+    height: 72px;
+    font-size: 1.8rem;
+  }
+
+  .scan-result-text h2 {
+    font-size: 1.35rem;
+  }
+
+  .scan-modal {
+    padding: var(--sp-5) var(--sp-4) var(--sp-6);
+  }
+}
+
+/* Tablets and up */
+@media (min-width: 768px) {
+  .scan-body {
+    padding: var(--sp-8) var(--sp-5) var(--sp-10);
+    gap: var(--sp-8);
+  }
+
+  .scan-viewport {
+    max-width: 460px;
+  }
+
+  .scan-controls {
+    max-width: 460px;
+  }
+}
+
+/* Large screens */
+@media (min-width: 1024px) {
+  .scan-body {
+    padding: var(--sp-10) var(--sp-6) var(--sp-12);
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   11. REDUCED MOTION
+   ══════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .scan-topbar-menu,
+  .scan-ctrl-btn,
+  .scan-result-btn,
+  .scan-result-icon,
+  .scan-modal,
+  .scan-sidemenu,
+  .scan-sidemenu-link,
+  .scan-viewport,
+  .scan-laser {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
