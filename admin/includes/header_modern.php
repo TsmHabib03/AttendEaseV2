@@ -184,33 +184,54 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
                 </div>
             </header>
 
-            <!-- Breadcrumb Bar -->
+            <!-- Page Hero Banner -->
             <?php if (isset($breadcrumb) && is_array($breadcrumb) && count($breadcrumb) > 0): ?>
-            <nav class="admin-breadcrumb-bar<?php echo !empty($breadcrumbEnhanced) ? ' admin-breadcrumb-bar--enhanced' : ''; ?>" aria-label="Breadcrumb" id="breadcrumbBar">
-                <ol class="breadcrumb-list" role="list">
-                    <?php foreach ($breadcrumb as $i => $crumb): ?>
-                        <li>
-                            <?php if ($i === count($breadcrumb) - 1): ?>
-                                <span class="breadcrumb-current" aria-current="page">
-                                    <?php if (!empty($crumb['icon'])): ?><i class="fa-solid fa-<?php echo $crumb['icon']; ?>"></i><?php endif; ?>
-                                    <?php echo sanitizeOutput($crumb['label']); ?>
-                                </span>
-                            <?php else: ?>
-                                <a href="<?php echo $crumb['url']; ?>" class="breadcrumb-link">
-                                    <?php if (!empty($crumb['icon'])): ?><i class="fa-solid fa-<?php echo $crumb['icon']; ?>"></i><?php endif; ?>
-                                    <?php echo sanitizeOutput($crumb['label']); ?>
-                                </a>
-                            <?php endif; ?>
-                        </li>
-                    <?php endforeach; ?>
-                </ol>
-                <?php if (isset($breadcrumbAction)): ?>
-                    <a href="<?php echo $breadcrumbAction['url']; ?>" class="breadcrumb-action" <?php echo !empty($breadcrumbAction['target']) ? 'target="' . $breadcrumbAction['target'] . '"' : ''; ?>>
-                        <?php if (!empty($breadcrumbAction['icon'])): ?><i class="fa-solid fa-<?php echo $breadcrumbAction['icon']; ?>"></i><?php endif; ?>
-                        <?php echo sanitizeOutput($breadcrumbAction['label']); ?>
-                    </a>
-                <?php endif; ?>
-            </nav>
+            <section class="page-hero" id="breadcrumbBar">
+                <div class="page-hero-inner">
+                    <!-- Breadcrumb trail -->
+                    <nav class="hero-breadcrumb" aria-label="Breadcrumb">
+                        <ol role="list">
+                            <?php foreach ($breadcrumb as $i => $crumb): ?>
+                                <li>
+                                    <?php if ($i === count($breadcrumb) - 1): ?>
+                                        <span aria-current="page">
+                                            <?php if (!empty($crumb['icon'])): ?><i class="fa-solid fa-<?php echo $crumb['icon']; ?>"></i><?php endif; ?>
+                                            <?php echo sanitizeOutput($crumb['label']); ?>
+                                        </span>
+                                    <?php else: ?>
+                                        <a href="<?php echo $crumb['url']; ?>">
+                                            <?php if (!empty($crumb['icon'])): ?><i class="fa-solid fa-<?php echo $crumb['icon']; ?>"></i><?php endif; ?>
+                                            <?php echo sanitizeOutput($crumb['label']); ?>
+                                        </a>
+                                    <?php endif; ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ol>
+                    </nav>
+                    <!-- Hero main row -->
+                    <div class="hero-main">
+                        <div class="hero-left">
+                            <div class="hero-icon">
+                                <i class="fa-solid fa-<?php echo isset($pageIcon) ? $pageIcon : 'house'; ?>"></i>
+                            </div>
+                            <div>
+                                <h1 class="hero-title"><?php echo isset($pageTitle) ? sanitizeOutput($pageTitle) : 'Dashboard'; ?></h1>
+                                <?php if (isset($pageDescription)): ?>
+                                    <p class="hero-desc"><i class="fa-solid fa-circle-info"></i> <?php echo sanitizeOutput($pageDescription); ?></p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <?php if (isset($breadcrumbAction)): ?>
+                        <div class="hero-actions">
+                            <a href="<?php echo $breadcrumbAction['url']; ?>" class="hero-action hero-action--primary" <?php echo !empty($breadcrumbAction['target']) ? 'target="' . $breadcrumbAction['target'] . '"' : ''; ?> <?php echo !empty($breadcrumbAction['onclick']) ? 'onclick="' . $breadcrumbAction['onclick'] . '"' : ''; ?>>
+                                <?php if (!empty($breadcrumbAction['icon'])): ?><i class="fa-solid fa-<?php echo $breadcrumbAction['icon']; ?>"></i><?php endif; ?>
+                                <?php echo sanitizeOutput($breadcrumbAction['label']); ?>
+                            </a>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </section>
             <?php endif; ?>
 
             <!-- Content Wrapper -->

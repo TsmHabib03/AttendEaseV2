@@ -290,6 +290,7 @@ $breadcrumb = [
     ['label' => 'Students', 'icon' => 'user-group', 'url' => 'view_students.php'],
     ['label' => $pageTitle, 'icon' => $pageIcon, 'url' => '#']
 ];
+$pageDescription = isset($_GET['id']) ? 'Update registered student information' : 'Register a new student to the system';
 
 include 'includes/header_modern.php';
 ?>

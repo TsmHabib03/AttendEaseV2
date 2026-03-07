@@ -163,7 +163,7 @@ $recentAttendance = $dashboardData['recentActivity'];
 $breadcrumb = [
     ['label' => 'Dashboard', 'icon' => 'house', 'url' => 'dashboard.php']
 ];
-$breadcrumbEnhanced = true;
+$pageDescription = 'Monitor attendance activity and school statistics';
 include 'includes/header_modern.php';
 ?>
 
@@ -180,75 +180,89 @@ include 'includes/header_modern.php';
     </div>
 </div>
 
-<!-- Dashboard Welcome -->
-<div class="dash-welcome">
-    <div class="dash-welcome-text">
-        <h1 class="dash-welcome-title">Welcome back, <?php echo isset($currentAdmin) ? sanitizeOutput($currentAdmin['username']) : 'Admin'; ?></h1>
-        <p class="dash-welcome-date"><i class="fa-solid fa-calendar-day"></i> <?php echo date('l, F j, Y'); ?></p>
+<!-- ─── Top Stats Row ─── -->
+<div class="dash-stats-row">
+    <!-- Attendance Rate Ring (feature card) -->
+    <div class="dash-ring-card">
+        <div class="dash-ring-wrap">
+            <svg class="dash-ring-svg" viewBox="0 0 120 120">
+                <circle class="dash-ring-track" cx="60" cy="60" r="52" />
+                <circle class="dash-ring-fill" cx="60" cy="60" r="52"
+                    stroke-dasharray="326.73"
+                    stroke-dashoffset="<?php echo 326.73 - (326.73 * $attendanceRate / 100); ?>" />
+            </svg>
+            <div class="dash-ring-label">
+                <span class="dash-ring-value"><?php echo $attendanceRate; ?></span>
+                <span class="dash-ring-unit">%</span>
+            </div>
+        </div>
+        <div class="dash-ring-info">
+            <span class="dash-ring-title">Attendance Rate</span>
+            <span class="dash-ring-sub">Today's overview</span>
+        </div>
+    </div>
+
+    <!-- Mini stat cards -->
+    <div class="dash-mini-stat">
+        <div class="dash-mini-icon dash-mini-icon--green"><i class="fa-solid fa-user-group"></i></div>
+        <div class="dash-mini-body">
+            <span class="dash-mini-value"><?php echo number_format($totalStudents); ?></span>
+            <span class="dash-mini-label">Total Students</span>
+        </div>
+        <div class="dash-mini-chip"><i class="fa-solid fa-table-cells-large"></i> <?php echo $activeSections; ?> sections</div>
+    </div>
+
+    <div class="dash-mini-stat">
+        <div class="dash-mini-icon dash-mini-icon--green"><i class="fa-solid fa-user-check"></i></div>
+        <div class="dash-mini-body">
+            <span class="dash-mini-value"><?php echo number_format($presentToday); ?></span>
+            <span class="dash-mini-label">Present Today</span>
+        </div>
+        <div class="dash-mini-chip dash-mini-chip--green"><i class="fa-solid fa-arrow-trend-up"></i> <?php echo $attendanceRate; ?>%</div>
+    </div>
+
+    <div class="dash-mini-stat">
+        <div class="dash-mini-icon dash-mini-icon--amber"><i class="fa-solid fa-user-xmark"></i></div>
+        <div class="dash-mini-body">
+            <span class="dash-mini-value"><?php echo number_format($absentToday); ?></span>
+            <span class="dash-mini-label">Absent Today</span>
+        </div>
+        <div class="dash-mini-chip dash-mini-chip--amber"><i class="fa-solid fa-arrow-trend-down"></i> <?php echo number_format(100 - $attendanceRate, 1); ?>%</div>
+    </div>
+
+    <div class="dash-mini-stat">
+        <div class="dash-mini-icon dash-mini-icon--green"><i class="fa-solid fa-clipboard-list"></i></div>
+        <div class="dash-mini-body">
+            <span class="dash-mini-value"><?php echo number_format($totalRecords); ?></span>
+            <span class="dash-mini-label">Total Records</span>
+        </div>
+        <div class="dash-mini-chip"><i class="fa-solid fa-database"></i> All time</div>
     </div>
 </div>
 
-<!-- Stat Cards — Bento Grid -->
-<div class="bento" style="margin-bottom: var(--sp-6);">
-    <!-- Total Students -->
-    <div class="dash-stat-card">
-        <div class="dash-stat-icon dash-stat-icon-green">
-            <i class="fa-solid fa-user-group"></i>
-        </div>
-        <div class="dash-stat-value"><?php echo number_format($totalStudents); ?></div>
-        <div class="dash-stat-label">Total Students</div>
-        <div class="dash-stat-footer">
-            <i class="fa-solid fa-table-cells-large"></i> <?php echo $activeSections; ?> sections
-        </div>
-    </div>
-
-    <!-- Present Today -->
-    <div class="dash-stat-card">
-        <div class="dash-stat-icon dash-stat-icon-green">
-            <i class="fa-solid fa-user-check"></i>
-        </div>
-        <div class="dash-stat-value"><?php echo number_format($presentToday); ?></div>
-        <div class="dash-stat-label">Present Today</div>
-        <div class="dash-stat-footer">
-            <i class="fa-solid fa-arrow-up"></i> <?php echo $attendanceRate; ?>% rate
-        </div>
-    </div>
-
-    <!-- Absent Today -->
-    <div class="dash-stat-card">
-        <div class="dash-stat-icon dash-stat-icon-amber">
-            <i class="fa-solid fa-user-xmark"></i>
-        </div>
-        <div class="dash-stat-value"><?php echo number_format($absentToday); ?></div>
-        <div class="dash-stat-label">Absent Today</div>
-        <div class="dash-stat-footer" style="color: var(--amber-600);">
-            <i class="fa-solid fa-arrow-down"></i> <?php echo number_format(100 - $attendanceRate, 1); ?>% of total
-        </div>
-    </div>
-
-    <!-- Total Records -->
-    <div class="dash-stat-card">
-        <div class="dash-stat-icon dash-stat-icon-green">
-            <i class="fa-solid fa-clipboard-list"></i>
-        </div>
-        <div class="dash-stat-value"><?php echo number_format($totalRecords); ?></div>
-        <div class="dash-stat-label">Total Records</div>
-        <div class="dash-stat-footer">
-            <i class="fa-solid fa-database"></i> All time
-        </div>
-    </div>
-</div>
-
-<!-- Main Bento Grid -->
-<div class="bento">
-    <!-- Weekly Attendance Chart — spans 2 columns -->
-    <div class="dash-card bento-span-2">
+<!-- ─── Main Bento Grid ─── -->
+<div class="dash-bento">
+    <!-- Weekly Trend — wide card -->
+    <div class="dash-card dash-bento-wide">
         <div class="dash-card-header">
-            <h3 class="dash-card-title"><i class="fa-solid fa-chart-line"></i> Weekly Attendance Trend</h3>
+            <h3 class="dash-card-title"><i class="fa-solid fa-chart-area"></i> Weekly Attendance Trend</h3>
+            <span class="dash-card-subtitle">Last 7 days</span>
         </div>
         <div class="dash-card-body">
             <div class="dash-chart-wrap">
                 <canvas id="weeklyChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Doughnut -->
+    <div class="dash-card">
+        <div class="dash-card-header">
+            <h3 class="dash-card-title"><i class="fa-solid fa-chart-pie"></i> By Section</h3>
+        </div>
+        <div class="dash-card-body">
+            <div class="dash-chart-wrap dash-chart-wrap--sm">
+                <canvas id="sectionChart"></canvas>
             </div>
         </div>
     </div>
@@ -261,39 +275,35 @@ include 'includes/header_modern.php';
         <div class="dash-card-body">
             <div class="dash-actions">
                 <a href="manage_students.php" class="dash-action">
-                    <i class="fa-solid fa-user-plus"></i>
+                    <div class="dash-action-icon"><i class="fa-solid fa-user-plus"></i></div>
                     <span>Add Student</span>
                 </a>
                 <a href="manual_attendance.php" class="dash-action">
-                    <i class="fa-solid fa-pen-to-square"></i>
+                    <div class="dash-action-icon"><i class="fa-solid fa-pen-to-square"></i></div>
                     <span>Manual Entry</span>
                 </a>
                 <a href="../scan_attendance.php" class="dash-action" target="_blank">
-                    <i class="fa-solid fa-qrcode"></i>
+                    <div class="dash-action-icon"><i class="fa-solid fa-qrcode"></i></div>
                     <span>QR Scanner</span>
                 </a>
                 <a href="attendance_reports_sections.php" class="dash-action">
-                    <i class="fa-solid fa-chart-column"></i>
+                    <div class="dash-action-icon"><i class="fa-solid fa-chart-column"></i></div>
                     <span>Reports</span>
+                </a>
+                <a href="view_students.php" class="dash-action">
+                    <div class="dash-action-icon"><i class="fa-solid fa-list-check"></i></div>
+                    <span>Student List</span>
+                </a>
+                <a href="manage_sections.php" class="dash-action">
+                    <div class="dash-action-icon"><i class="fa-solid fa-table-cells-large"></i></div>
+                    <span>Sections</span>
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- Section Chart -->
-    <div class="dash-card">
-        <div class="dash-card-header">
-            <h3 class="dash-card-title"><i class="fa-solid fa-chart-pie"></i> Attendance by Section</h3>
-        </div>
-        <div class="dash-card-body">
-            <div class="dash-chart-wrap" style="height: 260px;">
-                <canvas id="sectionChart"></canvas>
-            </div>
-        </div>
-    </div>
-
-    <!-- Recent Attendance — spans 2 columns -->
-    <div class="dash-card bento-span-2">
+    <!-- Recent Attendance — wide card -->
+    <div class="dash-card dash-bento-wide">
         <div class="dash-card-header">
             <h3 class="dash-card-title"><i class="fa-solid fa-clock-rotate-left"></i> Recent Attendance</h3>
             <a href="attendance_reports_sections.php" class="btn btn-sm btn-outline">View All</a>
@@ -332,7 +342,7 @@ include 'includes/header_modern.php';
                 <i class="fa-solid fa-triangle-exclamation" style="color: var(--amber-600);"></i>
                 Needs Attention
             </h3>
-            <a href="manual_attendance.php" class="btn btn-sm btn-outline">Fix Records</a>
+            <a href="manual_attendance.php" class="btn btn-sm btn-outline">Fix</a>
         </div>
         <div class="dash-card-body-flush" style="max-height: 380px; overflow-y: auto;">
             <div id="needsAttentionList">
@@ -343,300 +353,209 @@ include 'includes/header_modern.php';
             </div>
         </div>
     </div>
-
-    <!-- System Information -->
-    <div class="dash-card">
-        <div class="dash-card-header">
-            <h3 class="dash-card-title"><i class="fa-solid fa-circle-info"></i> System Information</h3>
-        </div>
-        <div class="dash-card-body">
-            <div class="dash-sysinfo-row">
-                <span class="dash-sysinfo-label">Total Records</span>
-                <span class="dash-sysinfo-value"><?php echo number_format($totalRecords); ?></span>
-            </div>
-            <div class="dash-sysinfo-row">
-                <span class="dash-sysinfo-label">Active Sections</span>
-                <span class="dash-sysinfo-value"><?php echo $activeSections; ?></span>
-            </div>
-            <div class="dash-sysinfo-row">
-                <span class="dash-sysinfo-label">Last Updated</span>
-                <span class="dash-sysinfo-value"><?php echo date('g:i A'); ?></span>
-            </div>
-        </div>
-    </div>
 </div>
 
 <script>
 /**
- * San Francisco High School Dashboard - Interactive Data Visualization
- * Fully functional dashboard with real-time data and Chart.js integration
+ * SFHS Dashboard — Enhanced Charts & Interactions
  */
-
 (function() {
     'use strict';
-    
-    // Get dashboard data
     const data = window.dashboardData;
-    
-    if (!data) {
-        console.error('Dashboard data not available');
-        return;
-    }
-    
-    // Chart instances
-    let weeklyChart = null;
-    let sectionChart = null;
-    
-    // Glass-style tooltip — translucent white card with soft border
+    if (!data) { console.error('Dashboard data not available'); return; }
+
+    let weeklyChart = null, sectionChart = null;
+
     const tooltipStyle = {
-        backgroundColor: 'rgba(255,255,255,0.92)',
+        backgroundColor: 'rgba(255,255,255,0.94)',
         titleColor: '#0f172a',
-        bodyColor: '#64748b',
-        borderColor: 'rgba(255,255,255,0.5)',
+        bodyColor: '#475569',
+        borderColor: 'rgba(0,0,0,0.06)',
         borderWidth: 1,
-        padding: 12,
-        titleFont: { size: 13, weight: 'bold', family: "'Manrope', sans-serif" },
+        padding: 14,
+        titleFont: { size: 13, weight: '700', family: "'Manrope', sans-serif" },
         bodyFont: { size: 12, family: "'Manrope', sans-serif" },
         bodySpacing: 6,
-        cornerRadius: 10,
+        cornerRadius: 12,
         displayColors: true,
-        boxPadding: 4,
-        caretSize: 6
+        boxPadding: 5,
+        caretSize: 6,
+        boxWidth: 10,
+        boxHeight: 10,
+        usePointStyle: true
     };
 
-    /**
-     * Initialize Weekly Attendance Trend Chart
-     * Bar chart showing Present vs Absent for last 7 days
-     */
+    /* ── Weekly Attendance: stacked area chart ── */
     function initWeeklyChart() {
         const ctx = document.getElementById('weeklyChart');
         if (!ctx) return;
-        
-        const weeklyData = data.weeklyTrend || [];
-        
-        // Prepare data
-        const labels = weeklyData.map(day => {
-            const date = new Date(day.date);
-            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        const weekly = data.weeklyTrend || [];
+        const labels = weekly.map(d => {
+            const dt = new Date(d.date);
+            return dt.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
         });
-        
-        const presentData = weeklyData.map(day => parseInt(day.present) || 0);
-        const absentData = weeklyData.map(day => parseInt(day.absent) || 0);
-        
-        // New Green Palette
-        const chartColors = {
-            green: {
-                primary: '#1ea85b',
-                light: 'rgba(30, 168, 91, 0.8)',
-                lighter: 'rgba(30, 168, 91, 0.5)'
-            },
-            red: {
-                primary: '#EF4444',
-                light: 'rgba(239, 68, 68, 0.8)',
-                lighter: 'rgba(239, 68, 68, 0.5)'
-            }
-        };
-        
-        // Create chart
+        const present = weekly.map(d => parseInt(d.present) || 0);
+        const absent  = weekly.map(d => parseInt(d.absent)  || 0);
+
         weeklyChart = new Chart(ctx, {
-            type: 'bar',
+            type: 'line',
             data: {
-                labels: labels,
+                labels,
                 datasets: [
                     {
                         label: 'Present',
-                        data: presentData,
-                        backgroundColor: chartColors.green.light,
-                        borderColor: chartColors.green.primary,
-                        borderWidth: 2,
-                        borderRadius: 6,
-                        borderSkipped: false
+                        data: present,
+                        borderColor: '#1ea85b',
+                        backgroundColor: function(context) {
+                            const chart = context.chart;
+                            const {ctx: c, chartArea} = chart;
+                            if (!chartArea) return 'rgba(30,168,91,0.15)';
+                            const g = c.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                            g.addColorStop(0, 'rgba(30,168,91,0.28)');
+                            g.addColorStop(1, 'rgba(30,168,91,0.02)');
+                            return g;
+                        },
+                        borderWidth: 2.5,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#1ea85b',
+                        pointBorderWidth: 2,
+                        pointHoverRadius: 7,
+                        pointHoverBorderWidth: 3
                     },
                     {
                         label: 'Absent',
-                        data: absentData,
-                        backgroundColor: chartColors.red.light,
-                        borderColor: chartColors.red.primary,
+                        data: absent,
+                        borderColor: '#ef4444',
+                        backgroundColor: function(context) {
+                            const chart = context.chart;
+                            const {ctx: c, chartArea} = chart;
+                            if (!chartArea) return 'rgba(239,68,68,0.10)';
+                            const g = c.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                            g.addColorStop(0, 'rgba(239,68,68,0.18)');
+                            g.addColorStop(1, 'rgba(239,68,68,0.01)');
+                            return g;
+                        },
                         borderWidth: 2,
-                        borderRadius: 6,
-                        borderSkipped: false
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#ef4444',
+                        pointBorderWidth: 2,
+                        pointHoverRadius: 7,
+                        pointHoverBorderWidth: 3
                     }
                 ]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                interaction: {
-                    mode: 'index',
-                    intersect: false
-                },
+                interaction: { mode: 'index', intersect: false },
                 plugins: {
                     legend: {
-                        position: 'top',
-                        align: 'end',
+                        position: 'top', align: 'end',
                         labels: {
-                            boxWidth: 12,
-                            boxHeight: 12,
-                            padding: 15,
+                            boxWidth: 10, boxHeight: 10, padding: 16,
                             color: '#64748b',
-                            font: {
-                                size: 12,
-                                weight: '600'
-                            },
-                            usePointStyle: true,
-                            pointStyle: 'circle'
+                            font: { size: 12, weight: '600' },
+                            usePointStyle: true, pointStyle: 'circle'
                         }
                     },
                     tooltip: {
                         ...tooltipStyle,
                         callbacks: {
-                            title: function(context) {
-                                return context[0].label || '';
-                            },
-                            label: function(context) {
-                                const label = context.dataset.label || '';
-                                const value = context.parsed.y || 0;
-                                const total = presentData[context.dataIndex] + absentData[context.dataIndex];
-                                const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
-                                return `${label}: ${value} (${percentage}%)`;
+                            label: function(ctx) {
+                                const v = ctx.parsed.y || 0;
+                                const total = present[ctx.dataIndex] + absent[ctx.dataIndex];
+                                const pct = total > 0 ? ((v / total) * 100).toFixed(1) : 0;
+                                return ` ${ctx.dataset.label}: ${v} (${pct}%)`;
                             }
                         }
                     }
                 },
                 scales: {
                     x: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            color: '#64748b',
-                            font: {
-                                size: 11,
-                                weight: '500'
-                            }
-                        }
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8', font: { size: 11, weight: '500' } }
                     },
                     y: {
                         beginAtZero: true,
-                        grid: {
-                            color: '#e2e8f0',
-                            drawBorder: false
-                        },
-                        ticks: {
-                            color: '#64748b',
-                            precision: 0,
-                            font: {
-                                size: 11
-                            }
-                        }
+                        grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false },
+                        ticks: { color: '#94a3b8', precision: 0, font: { size: 11 } }
                     }
                 }
             }
         });
     }
-    
-    /**
-     * Initialize Section Attendance Chart
-     * Donut chart showing today's attendance by section
-     */
+
+    /* ── Section Attendance: doughnut ── */
     function initSectionChart() {
         const ctx = document.getElementById('sectionChart');
         if (!ctx) return;
-        
-        const sectionData = data.sectionAttendance || [];
-        
-        // Prepare data - only show sections with present students today
-        const labels = sectionData.map(s => s.section || 'Unknown');
-        const presentData = sectionData.map(s => parseInt(s.present) || 0);
-        const totalData = sectionData.map(s => parseInt(s.total) || 0);
-        
-        // Green spectrum palette for sections
-        const sectionColors = [
-            'rgba(23, 138, 74, 0.85)',    // --green-700
-            'rgba(30, 168, 91, 0.85)',    // --green-600
-            'rgba(39, 195, 106, 0.82)',   // --green-500
-            'rgba(68, 207, 131, 0.80)',   // --green-400
-            'rgba(100, 221, 156, 0.78)',  // --green-300
-            'rgba(145, 233, 183, 0.75)',  // --green-200
-            'rgba(100, 116, 139, 0.75)',  // --gray-500 contrast
-            'rgba(148, 163, 184, 0.70)',  // --gray-400
-            'rgba(15, 110, 60, 0.85)',    // deep green
-            'rgba(180, 240, 210, 0.80)'   // light green
+        const sections = data.sectionAttendance || [];
+        const labels    = sections.map(s => s.section || 'Unknown');
+        const presData  = sections.map(s => parseInt(s.present) || 0);
+        const totData   = sections.map(s => parseInt(s.total)   || 0);
+        const palette = [
+            '#178a4a','#1ea85b','#27c36a','#34b868','#5cc885',
+            '#8fd9ab','#64748b','#94a3b8','#0e6e3c','#b4f0d2'
         ];
-        
-        const sectionBorderColors = sectionColors.map(c => c.replace(/0\.\d+\)$/, '1)'));
-        
-        // Create chart
+
         sectionChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: labels,
+                labels,
                 datasets: [{
-                    data: presentData,
-                    backgroundColor: sectionColors,
-                    borderColor: sectionBorderColors,
-                    borderWidth: 2,
-                    hoverOffset: 10,
-                    spacing: 2
+                    data: presData,
+                    backgroundColor: palette.slice(0, labels.length),
+                    borderColor: '#fff',
+                    borderWidth: 3,
+                    hoverOffset: 8,
+                    spacing: 3
                 }]
             },
             options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                cutout: '65%',
+                responsive: true, maintainAspectRatio: false,
+                cutout: '68%',
                 plugins: {
                     legend: {
                         position: 'bottom',
                         labels: {
-                            boxWidth: 12,
-                            boxHeight: 12,
-                            padding: 12,
+                            boxWidth: 10, boxHeight: 10, padding: 12,
                             color: '#64748b',
-                            font: {
-                                size: 11,
-                                weight: '600'
-                            },
-                            usePointStyle: true,
-                            pointStyle: 'circle',
+                            font: { size: 11, weight: '600' },
+                            usePointStyle: true, pointStyle: 'circle',
                             generateLabels: function(chart) {
-                                const data = chart.data;
-                                return data.labels.map((label, i) => {
-                                    const value = data.datasets[0].data[i];
-                                    const total = totalData[i];
-                                    const percentage = total > 0 ? ((value / total) * 100).toFixed(0) : 0;
+                                return chart.data.labels.map((l, i) => {
+                                    const v = chart.data.datasets[0].data[i];
+                                    const t = totData[i];
+                                    const p = t ? ((v/t)*100).toFixed(0) : 0;
                                     return {
-                                        text: `${label}: ${value}/${total} (${percentage}%)`,
-                                        fillStyle: data.datasets[0].backgroundColor[i],
-                                        strokeStyle: data.datasets[0].borderColor[i],
-                                        lineWidth: 2,
-                                        hidden: false,
-                                        index: i
+                                        text: `${l}: ${v}/${t} (${p}%)`,
+                                        fillStyle: palette[i],
+                                        strokeStyle: '#fff',
+                                        lineWidth: 2, hidden: false, index: i
                                     };
                                 });
                             }
                         },
-                        onClick: function(e, legendItem, legend) {
-                            const index = legendItem.index;
-                            const chart = legend.chart;
-                            const meta = chart.getDatasetMeta(0);
-                            meta.data[index].hidden = !meta.data[index].hidden;
-                            chart.update();
+                        onClick: function(e, item, legend) {
+                            const meta = legend.chart.getDatasetMeta(0);
+                            meta.data[item.index].hidden = !meta.data[item.index].hidden;
+                            legend.chart.update();
                         }
                     },
                     tooltip: {
                         ...tooltipStyle,
                         callbacks: {
-                            label: function(context) {
-                                const label = context.label || '';
-                                const value = context.parsed || 0;
-                                const total = totalData[context.dataIndex] || 0;
-                                const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
-                                const absent = total - value;
-                                return [
-                                    `Present: ${value} students`,
-                                    `Absent: ${absent} students`,
-                                    `Rate: ${percentage}%`
-                                ];
+                            label: function(ctx) {
+                                const v = ctx.parsed || 0;
+                                const t = totData[ctx.dataIndex] || 0;
+                                const p = t ? ((v/t)*100).toFixed(1) : 0;
+                                return [` Present: ${v}`, ` Absent: ${t-v}`, ` Rate: ${p}%`];
                             }
                         }
                     }
@@ -644,136 +563,73 @@ include 'includes/header_modern.php';
             }
         });
     }
-    
-    /**
-     * Populate Recent Activity List
-     */
+
     function populateRecentActivity() {
-        // Already populated by PHP, but we can add animations
-        const items = document.querySelectorAll('.dash-activity-item');
-        items.forEach((item, index) => {
-            item.style.opacity = '0';
-            item.style.transform = 'translateX(-20px)';
+        document.querySelectorAll('.dash-activity-item').forEach((el, i) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateX(-16px)';
             setTimeout(() => {
-                item.style.transition = 'all 0.3s ease';
-                item.style.opacity = '1';
-                item.style.transform = 'translateX(0)';
-            }, index * 50);
+                el.style.transition = 'all 0.3s ease';
+                el.style.opacity = '1';
+                el.style.transform = 'translateX(0)';
+            }, i * 40);
         });
     }
-    
-    /**
-     * Populate Needs Attention List
-     */
+
     function populateNeedsAttention() {
-        const container = document.getElementById('needsAttentionList');
-        if (!container) return;
-        
-        const needsAttention = data.needsAttention || [];
-        
-        if (needsAttention.length === 0) {
-            container.innerHTML = `
-                <div class="dash-empty">
-                    <i class="fa-solid fa-circle-check"></i>
-                    <p>All attendance records are complete!</p>
-                </div>
-            `;
+        const c = document.getElementById('needsAttentionList');
+        if (!c) return;
+        const items = data.needsAttention || [];
+        if (!items.length) {
+            c.innerHTML = '<div class="dash-empty"><i class="fa-solid fa-circle-check"></i><p>All records complete!</p></div>';
             return;
         }
-        
-        let html = '';
-        needsAttention.forEach(record => {
-            const daysAgo = parseInt(record.days_ago) || 0;
-            const daysText = daysAgo === 1 ? '1 day ago' : `${daysAgo} days ago`;
-            const date = new Date(record.date);
-            const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-            const timeIn = record.time_in ? new Date(`2000-01-01 ${record.time_in}`).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) : 'N/A';
-            
-            html += `
-                <div class="dash-attention-item">
-                    <div class="dash-attention-left">
-                        <div class="dash-attention-icon">
-                            <i class="fa-solid fa-exclamation"></i>
-                        </div>
-                        <div class="dash-attention-info">
-                            <h4>${escapeHtml(record.first_name)} ${escapeHtml(record.last_name)}</h4>
-                            <p>${escapeHtml(record.section)} &bull; ${dateStr} &bull; In: ${timeIn} &bull; Missing Time Out</p>
-                        </div>
+        c.innerHTML = items.map(r => {
+            const days = parseInt(r.days_ago) || 0;
+            const dt = new Date(r.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+            const ti = r.time_in ? new Date('2000-01-01 '+r.time_in).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}) : 'N/A';
+            return `<div class="dash-attention-item">
+                <div class="dash-attention-left">
+                    <div class="dash-attention-icon"><i class="fa-solid fa-exclamation"></i></div>
+                    <div class="dash-attention-info">
+                        <h4>${escapeHtml(r.first_name)} ${escapeHtml(r.last_name)}</h4>
+                        <p>${escapeHtml(r.section)} &bull; ${dt} &bull; In: ${ti}</p>
                     </div>
-                    <span class="dash-badge dash-badge-error">${daysText}</span>
                 </div>
-            `;
-        });
-        
-        container.innerHTML = html;
-        
-        // Animate items
-        const items = container.querySelectorAll('.dash-attention-item');
-        items.forEach((item, index) => {
-            item.style.opacity = '0';
-            item.style.transform = 'translateX(20px)';
+                <span class="dash-badge dash-badge-error">${days === 1 ? '1 day ago' : days+' days ago'}</span>
+            </div>`;
+        }).join('');
+        c.querySelectorAll('.dash-attention-item').forEach((el, i) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateX(16px)';
             setTimeout(() => {
-                item.style.transition = 'all 0.3s ease';
-                item.style.opacity = '1';
-                item.style.transform = 'translateX(0)';
-            }, index * 50);
+                el.style.transition = 'all 0.3s ease';
+                el.style.opacity = '1';
+                el.style.transform = 'translateX(0)';
+            }, i * 40);
         });
     }
-    
-    /**
-     * Utility: Escape HTML
-     */
-    function escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-    
-    /**
-     * Hide loading overlay
-     */
+
+    function escapeHtml(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+
     function hideLoader() {
-        const loader = document.getElementById('dashboardLoader');
-        if (loader) {
-            setTimeout(() => {
-                loader.classList.add('hidden');
-            }, 500);
-        }
+        const l = document.getElementById('dashboardLoader');
+        if (l) setTimeout(() => l.classList.add('hidden'), 400);
     }
-    
-    /**
-     * Initialize Dashboard
-     */
+
     function init() {
-        console.log('Initializing dashboard with data:', data);
-        
-        // Initialize charts
         initWeeklyChart();
         initSectionChart();
-        
-        // Populate lists
         populateRecentActivity();
         populateNeedsAttention();
-        
-        // Hide loader
         hideLoader();
-        
-        console.log('Dashboard initialization complete');
     }
-    
-    // Run when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
-    
-    // Auto-refresh dashboard every 5 minutes
-    setInterval(() => {
-        console.log('Auto-refreshing dashboard...');
-        window.location.reload();
-    }, 5 * 60 * 1000);
-    
+
+    document.readyState === 'loading'
+        ? document.addEventListener('DOMContentLoaded', init)
+        : init();
+
+    setInterval(() => window.location.reload(), 5 * 60 * 1000);
 })();
 </script>
 

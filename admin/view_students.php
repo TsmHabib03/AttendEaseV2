@@ -65,6 +65,7 @@ $breadcrumb = [
     ['label' => 'Students', 'icon' => 'user-group', 'url' => 'view_students.php']
 ];
 $breadcrumbAction = ['label' => 'Add Student', 'icon' => 'user-plus', 'url' => 'manage_students.php'];
+$pageDescription = 'View and manage all registered students';
 
 include 'includes/header_modern.php';
 ?>

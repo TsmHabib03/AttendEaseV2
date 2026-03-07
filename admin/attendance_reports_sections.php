@@ -10,6 +10,7 @@ $breadcrumb = [
     ['label' => 'Dashboard', 'icon' => 'house', 'url' => 'dashboard.php'],
     ['label' => 'Attendance Reports', 'icon' => 'chart-column', 'url' => 'attendance_reports_sections.php']
 ];
+$pageDescription = 'Generate and analyze attendance data by section';
 
 // Include the modern admin header
 include 'includes/header_modern.php';

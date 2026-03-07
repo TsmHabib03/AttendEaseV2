@@ -208,6 +208,7 @@ $breadcrumb = [
     ['label' => 'Dashboard', 'icon' => 'house', 'url' => 'dashboard.php'],
     ['label' => 'Manual Attendance', 'icon' => 'pen-to-square', 'url' => 'manual_attendance.php']
 ];
+$pageDescription = 'Record student attendance entries manually';
 include 'includes/header_modern.php';
 ?>
 

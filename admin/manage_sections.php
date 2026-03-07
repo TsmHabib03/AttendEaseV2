@@ -157,6 +157,7 @@ $breadcrumb = [
     ['label' => 'Manage Sections', 'icon' => 'table-cells-large', 'url' => 'manage_sections.php']
 ];
 $breadcrumbAction = ['label' => 'Add Section', 'icon' => 'circle-plus', 'url' => '#', 'target' => ''];
+$pageDescription = 'Create and organize class sections and grade levels';
 
 include 'includes/header_modern.php';
 ?>
